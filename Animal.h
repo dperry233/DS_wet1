@@ -3,23 +3,25 @@
 
 class Animal {
 private:
-int Level; // Danger level
-int ID;
+    int Level; // Danger level
+    int ID;
 // comment to see if this works
 
 public:
-    Animal (int level,int id);
+    Animal(int level, int id);
 };
 
-/*a
+/*
  * Exceptions
  */
 
-class badAnimalInput: public std::exception {
+class badAnimalInput : public std::exception {
 };
-class Failure: public std::exception {
+
+class Failure : public std::exception {
 };
-class Memory: public std::exception {
+
+class Memory : public std::exception {
 };
 
 #endif
