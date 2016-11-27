@@ -2,7 +2,7 @@
 // Created by Krumpet on 27-Nov-16.
 //
 
-#include "animals.h"
+#include "Animal.h"
 
 /*
  * Class constructor
