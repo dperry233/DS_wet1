@@ -490,7 +490,7 @@ TreeResult AVLTree<keyType,dataType>::insertData(const keyType& iKey,const dataT
 		}
 		else {
 			return AVLTREE_NODE_ALREADY_EXISTS;
-			break;
+			break; // TODO: Remove unreachable code
 		}
 	}
 	tmpNode = newNode;
