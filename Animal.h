@@ -11,7 +11,9 @@ public:
     Animal(int level, int id); // default c'tor
     explicit Animal::Animal(int id); // default c'tor with default Level
     Animal::Animal(const Animal &original); // copy c'tor
+
     ~Animal();
+
     int getLevel();
     int getID();
 
@@ -19,6 +21,8 @@ public:
     void increaseLevel(int delta);
 
     void setID(int newID);
+
+
 };
 
 /*

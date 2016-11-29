@@ -20,6 +20,10 @@ Animal::Animal(const Animal &original) : Level(original.Level), ID(original.ID) 
 
 Animal::~Animal() {};
 
+/*
+ * Getters
+ */
+
 int Animal::getLevel() {
     return level;
 }
@@ -28,6 +32,9 @@ int Animal::getID() {
     return ID;
 }
 
+/*
+ * Setters
+ */
 
 // TODO: maybe change to regular changeLevel and throw error on delta<=0 only from zoologist
 void Animal::increaseLevel(int delta) {
@@ -39,4 +46,24 @@ void Animal::increaseLevel(int delta) {
 void Animal::setID(int newID) {
     if (newID <= 0) throw badAnimalInput;
     ID = newID;
+}
+
+/*
+ * Operators
+ */
+
+Animal &Animal::operator=(const Animal &rhs) = default;
+
+bool Animal::operator==(const Animal &rhs) {
+    return this.ID == rhs.ID;
+}
+
+// this is smaller if it has lower level, or if equal levels, HIGHER ID
+bool Animal::operator<(const Animal &rhs) {
+    if (this->Level < rhs.Level) return true;
+    else return this->ID > rhs.ID;
+}
+
+bool Animal::operator>(const Animal &rhs) {
+    return !(*this < rhs);
 }
