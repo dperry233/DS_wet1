@@ -1,19 +1,12 @@
-//
-// Created by Krumpet on 27-Nov-16.
-//
-
 #include "Animal.h"
 
 /*
  * Class constructor
  */
 
-Animal::Animal (int level, int id) : Level(level), ID(id) {
+explicit Animal::Animal (int id, int level = 0) : Level(level), ID(id) {
     if (level < 0 || id <= 0) throw badAnimalInput;
 }
-
-// explicit c'tor for Animal with 0 danger level
-explicit Animal::Animal (int id) : Level(0), ID(id) {}
 
 // copy c'tor
 Animal::Animal (const Animal &original) : Level(original.Level), ID(original.ID) {}
@@ -24,11 +17,11 @@ Animal::~Animal () {};
  * Getters
  */
 
-int Animal::getLevel () {
+int Animal::getLevel () const {
     return level;
 }
 
-int Animal::getID () {
+int Animal::getID () const {
     return ID;
 }
 

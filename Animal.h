@@ -2,21 +2,20 @@
 #define ANIMAL_H
 
 class Animal {
-private:
+protected:
     int Level; // Danger level
     int ID;
 // comment to see if this works
 
 public:
-    Animal (int level, int id); // default c'tor
-    explicit Animal::Animal (int id); // default c'tor with default Level
+    explicit Animal (int id, int level = 0); // default c'tor
     Animal::Animal (const Animal &original); // copy c'tor
 
     ~Animal ();
 
-    int getLevel ();
+    int getLevel () const;
 
-    int getID ();
+    int getID () const;
 
     // Throws badAnimalInput if delta <= 0
     void increaseLevel (int delta);
@@ -27,6 +26,7 @@ public:
 
     bool Animal::operator== (const Animal &rhs);
 
+// this is smaller if it has lower level, or if equal levels, HIGHER ID
     bool Animal::operator< (const Animal &rhs);
 
     bool Animal::operator> (const Animal &rhs);
