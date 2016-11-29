@@ -8,27 +8,27 @@
  * Class constructor
  */
 
-Animal::Animal(int level, int id) : Level(level), ID(id) {
+Animal::Animal (int level, int id) : Level(level), ID(id) {
     if (level < 0 || id <= 0) throw badAnimalInput;
 }
 
 // explicit c'tor for Animal with 0 danger level
-explicit Animal::Animal(int id) : Level(0), ID(id) {}
+explicit Animal::Animal (int id) : Level(0), ID(id) {}
 
 // copy c'tor
-Animal::Animal(const Animal &original) : Level(original.Level), ID(original.ID) {}
+Animal::Animal (const Animal &original) : Level(original.Level), ID(original.ID) {}
 
-Animal::~Animal() {};
+Animal::~Animal () {};
 
 /*
  * Getters
  */
 
-int Animal::getLevel() {
+int Animal::getLevel () {
     return level;
 }
 
-int Animal::getID() {
+int Animal::getID () {
     return ID;
 }
 
@@ -37,13 +37,13 @@ int Animal::getID() {
  */
 
 // TODO: maybe change to regular changeLevel and throw error on delta<=0 only from zoologist
-void Animal::increaseLevel(int delta) {
+void Animal::increaseLevel (int delta) {
     if (delta <= 0) throw badAnimalInput;
     level += delta;
     return;
 }
 
-void Animal::setID(int newID) {
+void Animal::setID (int newID) {
     if (newID <= 0) throw badAnimalInput;
     ID = newID;
 }
@@ -52,18 +52,16 @@ void Animal::setID(int newID) {
  * Operators
  */
 
-Animal &Animal::operator=(const Animal &rhs) = default;
-
-bool Animal::operator==(const Animal &rhs) {
+bool Animal::operator== (const Animal &rhs) {
     return this.ID == rhs.ID;
 }
 
 // this is smaller if it has lower level, or if equal levels, HIGHER ID
-bool Animal::operator<(const Animal &rhs) {
+bool Animal::operator< (const Animal &rhs) {
     if (this->Level < rhs.Level) return true;
     else return this->ID > rhs.ID;
 }
 
-bool Animal::operator>(const Animal &rhs) {
+bool Animal::operator> (const Animal &rhs) {
     return !(*this < rhs);
 }
