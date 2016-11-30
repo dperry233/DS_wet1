@@ -7,11 +7,10 @@ class Animal {
 protected:
     int Level; // Danger level
     int ID;
-// comment to see if this works
 
 public:
     explicit Animal (int id, int level = 0); // default c'tor
-    Animal::Animal (const Animal &original); // copy c'tor
+    Animal::Animal (const Animal & original); // copy c'tor
 
     virtual ~Animal ();
 
@@ -24,21 +23,21 @@ public:
 
     void setID (int newID);
 
-    Animal &Animal::operator= (const Animal &rhs) = default;
+    Animal & Animal::operator= (const Animal & rhs) = default;
 
-    bool Animal::operator== (const Animal &rhs);
+    bool Animal::operator== (const Animal & rhs);
 
 // this is smaller if it has lower level, or if equal levels, HIGHER ID
-    bool operator< (const Animal& lhs, const Animal &rhs);
+    bool operator< (const Animal & lhs, const Animal & rhs);
 
-    bool Animal::operator> (const Animal &rhs);
+    bool Animal::operator> (const Animal & rhs);
 };
 
 /*
  * Exceptions
  */
 
-class badAnimalInput : public std::exception {
+class badInput : public std::exception {
 };
 
 /*class Failure : public std::exception {

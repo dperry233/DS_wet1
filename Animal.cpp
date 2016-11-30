@@ -5,7 +5,7 @@
  */
 
 explicit Animal::Animal (int id, int level = 0) : Level(level), ID(id) {
-    if (level < 0 || id <= 0) throw badAnimalInput();
+    if (level < 0 || id <= 0) throw badInput();
 }
 
 // copy c'tor
@@ -31,13 +31,13 @@ int Animal::getID () const {
 
 // TODO: maybe change to regular changeLevel and throw error on delta<=0 only from zoologist
 void Animal::increaseLevel (int delta) {
-    if (delta <= 0) throw badAnimalInput();
+    if (delta <= 0) throw badInput();
     Level += delta;
     return;
 }
 
 void Animal::setID (int newID) {
-    if (newID <= 0) throw badAnimalInput();
+    if (newID <= 0) throw badInput();
     ID = newID;
 }
 
@@ -45,13 +45,13 @@ void Animal::setID (int newID) {
  * Operators
  */
 
-bool Animal::operator== (const Animal &rhs) {
+bool Animal::operator== (const Animal & rhs) {
     return ID == rhs.ID;
 }
 
 // this is smaller if it has lower level, or if equal levels and higher ID
 bool operator< (const Animal& lhs, const Animal &rhs) {
-    return lhs.Level < rhs.Level ? true : lhs.Level == rhs.Level && lhs.ID > rhs.ID;
+    return lhs.Level < rhs.Level || (lhs.Level == rhs.Level && lhs.ID > rhs.ID);
 }
 
 bool Animal::operator> (const Animal &rhs) {
