@@ -5,6 +5,9 @@
 #ifndef DS_WET1_ZOOLOGIST_H
 #define DS_WET1_ZOOLOGIST_H
 
+#include "Animal.h"
+#include "avlTree.h"
+
 class SuperBeast : public Animal {
 protected:
     SuperBeast *beast1;
@@ -21,6 +24,29 @@ public:
 
     // explicit conversion c'tor from base class
     explicit SuperBeast (const Animal& animal, SuperBeast * first=nullptr, SuperBeast * second= nullptr, Zoologist * owner=nullptr);
+
+    SuperBeast *getBeast1 () const;
+
+    void setBeast1 (SuperBeast *beast);
+
+    SuperBeast *getBeast2 () const;
+
+    void setBeast2 (SuperBeast *beast);
+
+    Zoologist *getOwner () const;
+
+    void setOwner (Zoologist *owner);
+
+
 };
+
+class Zoologist {
+private:
+    AVLTree<Animal,SuperBeast> tree;
+    int mostDangerous;
+    int MagiID;
+};
+
+
 
 #endif //DS_WET1_ZOOLOGIST_H

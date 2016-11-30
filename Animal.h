@@ -1,6 +1,8 @@
 #ifndef ANIMAL_H
 #define ANIMAL_H
 
+#include <exception>
+
 class Animal {
 protected:
     int Level; // Danger level
@@ -11,7 +13,7 @@ public:
     explicit Animal (int id, int level = 0); // default c'tor
     Animal::Animal (const Animal &original); // copy c'tor
 
-    ~Animal ();
+    virtual ~Animal ();
 
     int getLevel () const;
 
@@ -27,7 +29,7 @@ public:
     bool Animal::operator== (const Animal &rhs);
 
 // this is smaller if it has lower level, or if equal levels, HIGHER ID
-    bool Animal::operator< (const Animal &rhs);
+    bool operator< (const Animal& lhs, const Animal &rhs);
 
     bool Animal::operator> (const Animal &rhs);
 };
