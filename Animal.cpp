@@ -46,13 +46,12 @@ void Animal::setID (int newID) {
  */
 
 bool Animal::operator== (const Animal &rhs) {
-    return this->ID == rhs.ID;
+    return ID == rhs.ID;
 }
 
-// this is smaller if it has lower level, or if equal levels, HIGHER ID
+// this is smaller if it has lower level, or if equal levels and higher ID
 bool operator< (const Animal& lhs, const Animal &rhs) {
-    if (lhs.Level<rhs.Level) return true;
-    return lhs.Level == rhs.Level && lhs.ID > rhs.ID;
+    return lhs.Level < rhs.Level ? true : lhs.Level == rhs.Level && lhs.ID > rhs.ID;
 }
 
 bool Animal::operator> (const Animal &rhs) {

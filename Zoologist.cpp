@@ -23,7 +23,7 @@ SuperBeast *SuperBeast::getBeast1 () const {
 }
 
 void SuperBeast::setBeast1 (SuperBeast *beast) {
-    this->beast1 = beast;
+    beast1 = beast;
 }
 
 SuperBeast *SuperBeast::getBeast2 () const {
@@ -31,7 +31,7 @@ SuperBeast *SuperBeast::getBeast2 () const {
 }
 
 void SuperBeast::setBeast2 (SuperBeast *beast) {
-    this->beast2 = beast;
+    beast2 = beast;
 }
 
 Zoologist *SuperBeast::getOwner () const {
@@ -39,5 +39,5 @@ Zoologist *SuperBeast::getOwner () const {
 }
 
 void SuperBeast::setOwner (Zoologist *owner) {
-    this->Owner = owner;
+    Owner = owner;
 }
