@@ -24,15 +24,16 @@ protected:
     Zoologist * Owner;
 
 public:
-    explicit SuperBeast (int id, int level = 0, SuperBeast * first = nullptr, SuperBeast * second = nullptr,
-                         Zoologist * Owner = nullptr);
+    explicit SuperBeast (int id, int level = 0, SuperBeast * first = NULL, SuperBeast * second = NULL,
+                         Zoologist * Owner = NULL);
 
     ~SuperBeast ();
 
     SuperBeast (const SuperBeast & original);
 
     // explicit conversion c'tor from base class
-    explicit SuperBeast (const Animal & animal, Zoologist * owner, SuperBeast * first, SuperBeast * second);
+    explicit SuperBeast (const Animal & animal, Zoologist * owner = NULL, SuperBeast * first = NULL,
+                         SuperBeast * second = NULL);
 
     SuperBeast * getBeast1 () const;
 
@@ -65,7 +66,7 @@ public:
 
     int getMostDangerousID () const;
 
-    // throws badInput if dangerousID is null
+    // throws badInput if dangerousID is NULL
     void getMostDangerous (int * dangerousID);
 
     void setMostDangerousID (int mostDangerousID);

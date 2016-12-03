@@ -3,8 +3,9 @@
 //
 
 #include "tests.h"
-//#include "magicManager.h"
+#include "magicManager.h"
 #include "Animal.h"
+#include "Zoologist.h"
 
 using namespace std;
 std::string location;
@@ -51,10 +52,22 @@ bool animalTest() {
     ASSERT_NOT_EQUALS(-1,big.getID());
     ASSERT_EQUALS(6,big.getID());
 
+    ASSERT_NO_THROW((small.setID(6)));
+    ASSERT_EQUALS(true,small==big); // equal IDs
+    ASSERT_NO_THROW((small.setID(3)));
+    ASSERT_EQUALS(true,small==medium); // equal IDs
+    ASSERT_EQUALS(false,small==big);
+
+    return true;
+}
+
+bool beastTest() {
+    ASSERT_THROW(badInput)
     return true;
 }
 
 int main () {
     RUN_TEST(animalTest);
+    RUN_TEST(beastTest);
     return 0;
 }
