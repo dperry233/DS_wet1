@@ -87,14 +87,92 @@ private:
 
 
 
+	void inorderSwap(AVLNode<SuperBeast,SuperBeast>* node,SuperBeast* arr,int* i){
+		if (!node) {
+			return;
+		}
+		inorderSwap(node->leftSon,arr,i);
+		node->key=arr[*i];
+		node->value=arr[(*i)];
+		(*i)++;
+		inorderSwap(node->rightSon,arr,i);
+	}
 
-	MMStatusType getCreaturesByLevel(int** creatures,int* numberOfCreatures){
-		int* arr =(int*)malloc(sizeof(int)*this->IdTree->size);
-		SuperBeast* arr2 =(SuperBeast*)malloc(sizeof(SuperBeast)*this->IdTree->size);
+
+	void inOrderChange(AVLNode<int,SuperBeast>* node,int code,int factor){
+		if (!node) {
+			return;
+		}
+		inOrderChange(node->leftSon,code,factor);
+		if(node->key%code==0){
+			node->value.likes*=factor;
+		}
+		inOrderChange(node->rightSon,code,factor);
+
+	}
+
+
+	postTreeResult updatePosts(int postCode,int factor){
+		Post* originalTreeArray =(Post*)malloc(sizeof(Post)*this->IDtree->size);
 
 		int i=0;
-		inOrderToArray(this->levelTree->rootNode,arr2,&i);
-		for(int j=0;j<IdTree->size;j++){
+		inOrderToArray(likeTree->rootNode,originalTreeArray,&i);
+		Post* toChangeArray =(Post*)malloc(sizeof(Post)*this->IDtree->size);
+		Post* noChangeArray =(Post*)malloc(sizeof(Post)*this->IDtree->size);
+		Post zeroPost;
+		for(int x=0;x<i;x++){
+			toChangeArray[x]=zeroPost;
+			noChangeArray[x]=zeroPost;
+		}
+		int k=0,l=0;
+		for(int j=0;j<i;j++){
+			if((originalTreeArray[j].postId)%postCode==0){
+				toChangeArray[k]=originalTreeArray[j];
+				toChangeArray[k].likes*=factor;  //not sure if possible in this way
+				k++;
+			}else{
+				noChangeArray[l]=originalTreeArray[j];
+				l++;
+			}
+		}//arrays separated into 2 at this point
+		reverseArray(toChangeArray,k);
+		reverseArray(noChangeArray,l);
+		//merge arrays
+		for(int m=0,n=0,o=0;m<i;m++){
+
+			bool flag1=(toChangeArray[n])>(noChangeArray[o]);
+			if((flag1&&n<k)||o>=l){
+				originalTreeArray[m]=toChangeArray[n];
+				n++;
+			}else{
+				originalTreeArray[m]=noChangeArray[o];
+				o++;
+			}
+
+
+		}//arrays are merged in originalTreeArray
+		reverseArray(originalTreeArray,i);
+		free(noChangeArray);
+		free(toChangeArray);
+		int a=0;
+		inorderSwap(likeTree->rootNode,originalTreeArray,&a);
+		free(originalTreeArray);
+		inOrderChange(this->IDtree->rootNode,postCode,factor);
+		this->bestPost=this->likeTree->findMax();
+		return POSTTREE_SUCCESS;
+	}
+
+
+
+
+
+	MMStatusType getCreaturesByLevelHelper(AVLTree<Animal,SuperBeast> tree,int** creatures,int* numberOfCreatures){
+		int* arr =(int*)malloc(sizeof(int)*tree.size);
+		SuperBeast* arr2 =(SuperBeast*)malloc(sizeof(SuperBeast)*tree.size);
+
+		int i=0;
+		inOrderToArray(tree.rootNode,arr2,&i);
+		for(int j=0;j<tree.size;j++){
 			arr[j]= arr2[j].getID();
 		}
 		reverseArray(arr,i);
@@ -248,7 +326,87 @@ MMStatusType MagicManager::increaseLevelMM( int creatureID, int levelIncrease){
 	if(!this->IdTree->findIfValueExists(creatureID)){
 		return MM_FAILURE;
 	}
-	SuperBeast tmpBeast(*this->IdTree->getValue(creatureID));
+	SuperBeast tmpSuperBeast(*this->IdTree->getValue(creatureID));
+	this->releaseCreatureMM(creatureID);
+
+
+	TreeResult allFlag=this->IdTree->insertData(creatureID,tmpSuperBeast);
+		if(allFlag==AVLTREE_ALLOCATION_ERROR){
+			return MM_FAILURE;
+		}
+		allFlag=this->levelTree->insertData(tmpSuperBeast,tmpSuperBeast);
+		if(allFlag==AVLTREE_ALLOCATION_ERROR){
+			this->IdTree->removeValue(creatureID);
+			return MM_ALLOCATION_ERROR;
+		}
+
+
+		TreeResult magiFlag=tmpSuperBeast.getOwner()->tree.insertData(tmpSuperBeast,tmpSuperBeast);
+		if(magiFlag==AVLTREE_ALLOCATION_ERROR){
+			this->IdTree->removeValue(creatureID);
+			this->levelTree->removeValue(tmpSuperBeast);
+			return MM_ALLOCATION_ERROR;
+		}
+		if(allFlag==AVLTREE_NODE_ALREADY_EXISTS||magiFlag==AVLTREE_NODE_ALREADY_EXISTS){
+			return MM_FAILURE;//should not get here as there is a check for it above
+		}
+
+		//set pointers here
+
+		SuperBeast* idTreePtr=&(this->IdTree->getValue(creatureID));
+		SuperBeast* levelTreePtr=&(levelTree->getValue(tmpSuperBeast)) ;
+		Zoologist* ownerPtr=(tmpSuperBeast.getOwner()) ;
+
+		//idTree pointers setting
+		this->IdTree->getValue(creatureID)->setOwner(ownerPtr);
+		this->IdTree->getValue(creatureID)->setBeast1(idTreePtr);
+		this->IdTree->getValue(creatureID)->setBeast2(levelTreePtr);
+
+		//levelTree pointers setting
+
+		this->levelTree->getValue(tmpSuperBeast)->setOwner(ownerPtr);
+		this->levelTree->getValue(tmpSuperBeast)->setBeast1(idTreePtr);
+		this->levelTree->getValue(tmpSuperBeast)->setBeast2(levelTreePtr);
+
+	//in  magi tree ptr setting
+
+		tmpSuperBeast.getOwner()->getTree().getValue(tmpSuperBeast)->setOwner(ownerPtr);
+		tmpSuperBeast.getOwner()->getTree().getValue(tmpSuperBeast)->setBeast1(idTreePtr);
+		tmpSuperBeast.getOwner()->getTree().getValue(tmpSuperBeast)->setBeast2(levelTreePtr);
+
+		mostDangerous= this->levelTree->findMax();
+
+
+		//also set most dangerous for owner !!!!!!!!!!!!!!!!!!
+		//would probably be best if zoologist took care of itself
+		int tmpDangerous =tmpSuperBeast.getOwner()->getTree().findMax()->getID();
+		tmpSuperBeast.getOwner()->setMostDangerousID(tmpDangerous);
+
+
+		return MM_SUCCESS;
+	}
+
+	MMStatusType MagicManager::releaseCreatureMM( int creatureID){
+		if(creatureID<=0){
+			return MM_INVALID_INPUT;
+		}
+		if(!this->IdTree->findIfValueExists(creatureID)){
+			return MM_FAILURE;
+		}
+
+		SuperBeast tmpCreature =this->IdTree->getValue(creatureID);
+		tmpCreature.getOwner()->getTree().removeValue(tmpCreature);//should be replaced with addcreature
+		//make sure to check mostDangerous change
+		tmpCreature.getOwner()->setMostDangerousID(tmpCreature.getOwner()->getTree().findMax()->getID());
+
+
+
+		//add checks for removal success
+		this->levelTree->removeValue(tmpCreature);
+		this->IdTree->removeValue(creatureID);
+		mostDangerous=this->levelTree->findMax();
+
+
 
 
 
@@ -303,7 +461,7 @@ MMStatusType MagicManager::GetAllCreaturesByLevelMM ( int MagiID,
 		}
 
 
-		MMStatusType flag=getCreaturesByLevel(Creatures,numOfCreatures);
+		MMStatusType flag=getCreaturesByLevelHelper(this->levelTree,Creatures,numOfCreatures);
 		if(flag==MM_SUCCESS){
 			return MM_SUCCESS;
 		}
@@ -319,14 +477,15 @@ MMStatusType MagicManager::GetAllCreaturesByLevelMM ( int MagiID,
 		*Creatures=NULL;
 		return MM_SUCCESS;
 	}
-	MMStatusType magiFlag=this->magiTree->getValue(MagiID);//->getCreaturesByLevel;
+	MMStatusType magiFlag=this->getCreaturesByLevelHelper(
+			this->magiTree->getValue(MagiID)->getTree(),Creatures,numOfCreatures);
+	if(magiFlag==MM_SUCCESS)
 	{
 		return MM_SUCCESS;
 	}
 
 	return MM_FAILURE;
 }
-
 
 
 
