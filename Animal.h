@@ -13,7 +13,7 @@ public:
     explicit Animal (int id, int level = 0); // default c'tor
     Animal (const Animal & original); // copy c'tor
 
-    virtual ~Animal ();
+    //virtual ~Animal ();
 
     int getLevel () const;
 

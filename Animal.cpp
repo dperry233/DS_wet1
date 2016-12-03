@@ -11,7 +11,7 @@ Animal::Animal (int id, int level) : Level(level), ID(id) {
 // copy c'tor
 Animal::Animal (const Animal &original) : Level(original.Level), ID(original.ID) {}
 
-Animal::~Animal () {};
+// Animal::~Animal () {};
 
 /*
  * Getters

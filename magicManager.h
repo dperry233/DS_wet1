@@ -232,11 +232,14 @@ MMStatusType MagicManager::releaseCreatureMM( int creatureID){
 	if(!this->IdTree->findIfValueExists(creatureID)){
 		return MM_FAILURE;
 	}
-
-	SuperBeast* tmpCreature =this->IdTree->getValue(creatureID);
-	tmpCreature->getOwner()->getTree().removeValue(*tmpCreature);//should be replaced with addcreature
+// TODO: debug here
+	SuperBeast * tmpCreature =this->IdTree->getValue(creatureID);
+    Zoologist * owner = tmpCreature->getOwner();
+	owner->getTree().removeValue(*tmpCreature);//should be replaced with addcreature
 	//make sure to check mostDangerous change
-	tmpCreature->getOwner()->setMostDangerousID(tmpCreature->getOwner()->getTree().findMax()->getID());
+    // TODO: This is a problem if we deleted the last creature!
+    if (0==owner->getTree().size) owner->setMostDangerousID(0);
+    else owner->setMostDangerousID(tmpCreature->getOwner()->getTree().findMax()->getID());
 
 
 

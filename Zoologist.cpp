@@ -8,7 +8,7 @@ SuperBeast::SuperBeast (int id, int level, SuperBeast * first, SuperBeast * seco
                         Zoologist * Owner) : Animal(id, level), beast1(first), beast2(second),
                                              Owner(Owner) {}
 
-SuperBeast::~SuperBeast () {};
+// SuperBeast::~SuperBeast () {};
 
 SuperBeast::SuperBeast (const SuperBeast & original) : Animal(original), beast1(original.beast1),
                                                        beast2(original.beast2),

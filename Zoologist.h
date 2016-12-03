@@ -27,7 +27,7 @@ public:
     explicit SuperBeast (int id, int level = 0, SuperBeast * first = NULL, SuperBeast * second = NULL,
                          Zoologist * Owner = NULL);
 
-    ~SuperBeast ();
+    // ~SuperBeast ();
 
     SuperBeast (const SuperBeast & original);
 
