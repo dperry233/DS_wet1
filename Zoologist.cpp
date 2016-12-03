@@ -14,9 +14,9 @@ SuperBeast::SuperBeast (const SuperBeast & original) : Animal(original), beast1(
                                                        beast2(original.beast2),
                                                        Owner(original.Owner) {}
 
-explicit SuperBeast::SuperBeast (const Animal & animal, SuperBeast * first = nullptr, SuperBeast * second = nullptr,
-                                 Zoologist * owner = nullptr) : Animal(animal), beast1(first), beast2(second),
-                                                                Owner(owner) {}
+explicit SuperBeast::SuperBeast (const Animal & animal, Zoologist * owner = nullptr, SuperBeast * first = nullptr,
+                                 SuperBeast * second = nullptr) : Animal(animal), beast1(first), beast2(second),
+                                                                  Owner(owner) {}
 
 SuperBeast * SuperBeast::getBeast1 () const {
     return beast1;
@@ -83,4 +83,15 @@ void Zoologist::setTree (const AVLTree<Animal, SuperBeast> & tree) {
 void Zoologist::getMostDangerous (int * dangerousID) {
     if (!dangerousID) throw badInput();
     *dangerousID = getMostDangerousID();
+}
+
+ZooResult Zoologist::addCreature (int id, int level) {
+    Animal key;
+    try { Animal key = Animal(id, level); }
+    catch (const badInput &) {
+        return ZOO_INVALID_INPUT;
+    }
+    try { SuperBeast data (key,this) }
+    TreeResult res = tree.insertData(key,);
+
 }

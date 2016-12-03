@@ -40,10 +40,4 @@ public:
 class badInput : public std::exception {
 };
 
-/*class Failure : public std::exception {
-};
-
-class Memory : public std::exception {
-};
-*/
 #endif

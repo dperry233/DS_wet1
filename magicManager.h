@@ -145,6 +145,7 @@ MMStatusType MagicManager::AddCreatureMM(int creatureID, int MagiID, int level){
 
 	}
 
+	Animal key (creatureID,level);
 	SuperBeast tmpSuperBeast(creatureID,level);
 
 
@@ -158,13 +159,13 @@ MMStatusType MagicManager::AddCreatureMM(int creatureID, int MagiID, int level){
 		return MM_ALLOCATION_ERROR;
 	}
 
-
-	TreeResult magiFlag=this->magiTree->getValue(MagiID)->tree.insertData(tmpSuperBeast,tmpSuperBeast);
+	TreeResult magiFlag=this->magiTree->getValue(MagiID)->getTree().insertData(key,tmpSuperBeast);
 	if(magiFlag==AVLTREE_ALLOCATION_ERROR){
 		this->IdTree->removeValue(creatureID);
 		this->levelTree->removeValue(tmpSuperBeast);
 		return MM_ALLOCATION_ERROR;
 	}
+
 	if(allFlag==AVLTREE_NODE_ALREADY_EXISTS||magiFlag==AVLTREE_NODE_ALREADY_EXISTS){
 		return MM_FAILURE;//should not get here as there is a check for it above
 	}

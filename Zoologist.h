@@ -8,8 +8,15 @@
 #include "Animal.h"
 #include "avlTree.h"
 
+typedef enum {
+    ZOO_INVALID_INPUT,
+    ZOO_SUCCESS, ZOO_ALLOCATION_ERROR, ZOO_NODE_ALREADY_EXISTS, ZOO_NODE_NOT_FOUND
+} ZooResult;
+
 class SuperBeast : public Animal {
 protected:
+
+
     SuperBeast * beast1;
     SuperBeast * beast2;
     Zoologist * Owner;
@@ -23,8 +30,7 @@ public:
     SuperBeast (const SuperBeast & original);
 
     // explicit conversion c'tor from base class
-    explicit SuperBeast (const Animal & animal, SuperBeast * first = nullptr, SuperBeast * second = nullptr,
-                         Zoologist * owner = nullptr);
+    explicit SuperBeast (const Animal & animal, Zoologist * owner, SuperBeast * first, SuperBeast * second);
 
     SuperBeast * getBeast1 () const;
 
@@ -42,12 +48,7 @@ public:
 };
 
 class Zoologist {
-public:
-    // throws badInput if MagiID<=0
-
-
 private:
-
     AVLTree<Animal, SuperBeast> tree;
     int mostDangerousID;
     int MagiID;
@@ -60,9 +61,10 @@ public:
     // copy c'tor
     Zoologist (const Zoologist & original);
 
-    void Zoologist::getMostDangerous (int * dangerousID);
-
     int getMostDangerousID () const;
+
+    // throws badInput if dangerousID is null
+    void Zoologist::getMostDangerous (int * dangerousID);
 
     void setMostDangerousID (int mostDangerousID);
 
@@ -75,6 +77,8 @@ public:
     AVLTree<Animal, SuperBeast> & getTree ();
 
     void setTree (const AVLTree<Animal, SuperBeast> & tree);
+
+    ZooResult addCreature (int id, int level);
 
 };
 
