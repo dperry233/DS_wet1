@@ -85,7 +85,7 @@ void Zoologist::getMostDangerous (int * dangerousID) {
     *dangerousID = getMostDangerousID();
 }
 
-ZooResult Zoologist::addCreature (int id, int level) {
+/*ZooResult Zoologist::addCreature (int id, int level) {
     Animal key;
     try { Animal key = Animal(id, level); }
     catch (const badInput &) {
@@ -93,5 +93,9 @@ ZooResult Zoologist::addCreature (int id, int level) {
     }
     try { SuperBeast data (key,this) }
     TreeResult res = tree.insertData(key,);
+
+}*/
+
+ZooResult Zoologist::getCreaturesByLevel(int ** Creatures, int * numOfCreatures) {
 
 }
