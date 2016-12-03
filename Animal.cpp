@@ -4,14 +4,14 @@
  * Class constructor
  */
 
-explicit Animal::Animal (int id, int level = 0) : Level(level), ID(id) {
+Animal::Animal (int id, int level) : Level(level), ID(id) {
     if (level < 0 || id <= 0) throw badInput();
 }
 
 // copy c'tor
 Animal::Animal (const Animal &original) : Level(original.Level), ID(original.ID) {}
 
-virtual Animal::~Animal () {};
+Animal::~Animal () {};
 
 /*
  * Getters
@@ -51,7 +51,7 @@ bool Animal::operator== (const Animal & rhs) {
 
 // this is smaller if it has lower level, or if equal levels and higher ID
 bool operator< (const Animal& lhs, const Animal &rhs) {
-    return lhs.Level < rhs.Level || (lhs.Level == rhs.Level && lhs.ID > rhs.ID);
+    return lhs.getLevel() < rhs.getLevel() || (lhs.getLevel() == rhs.getLevel() && lhs.getID() > rhs.getID());
 }
 
 bool Animal::operator> (const Animal &rhs) {

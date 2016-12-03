@@ -10,7 +10,7 @@ protected:
 
 public:
     explicit Animal (int id, int level = 0); // default c'tor
-    Animal::Animal (const Animal & original); // copy c'tor
+    Animal (const Animal & original); // copy c'tor
 
     virtual ~Animal ();
 
@@ -23,15 +23,16 @@ public:
 
     void setID (int newID);
 
-    Animal & Animal::operator= (const Animal & rhs) = default;
+    Animal & operator= (const Animal & rhs) = default;
 
-    bool Animal::operator== (const Animal & rhs);
+    bool operator== (const Animal & rhs);
+
+    bool operator> (const Animal & rhs);
+};
 
 // this is smaller if it has lower level, or if equal levels, HIGHER ID
-    bool operator< (const Animal & lhs, const Animal & rhs);
-
-    bool Animal::operator> (const Animal & rhs);
-};
+// non-member
+bool operator< (const Animal & lhs, const Animal & rhs);
 
 /*
  * Exceptions

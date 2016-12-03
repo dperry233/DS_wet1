@@ -4,9 +4,9 @@
 
 #include "Zoologist.h"
 
-explicit SuperBeast::SuperBeast (int id, int level = 0, SuperBeast * first = nullptr, SuperBeast * second = nullptr,
-                                 Zoologist * Owner = nullptr) : Animal(id, level), beast1(first), beast2(second),
-                                                                Owner(Owner) {}
+SuperBeast::SuperBeast (int id, int level, SuperBeast * first, SuperBeast * second,
+                        Zoologist * Owner) : Animal(id, level), beast1(first), beast2(second),
+                                             Owner(Owner) {}
 
 SuperBeast::~SuperBeast () {};
 
@@ -14,9 +14,9 @@ SuperBeast::SuperBeast (const SuperBeast & original) : Animal(original), beast1(
                                                        beast2(original.beast2),
                                                        Owner(original.Owner) {}
 
-explicit SuperBeast::SuperBeast (const Animal & animal, Zoologist * owner = nullptr, SuperBeast * first = nullptr,
-                                 SuperBeast * second = nullptr) : Animal(animal), beast1(first), beast2(second),
-                                                                  Owner(owner) {}
+SuperBeast::SuperBeast (const Animal & animal, Zoologist * owner, SuperBeast * first,
+                        SuperBeast * second) : Animal(animal), beast1(first), beast2(second),
+                                                         Owner(owner) {}
 
 SuperBeast * SuperBeast::getBeast1 () const {
     return beast1;
@@ -95,7 +95,3 @@ void Zoologist::getMostDangerous (int * dangerousID) {
     TreeResult res = tree.insertData(key,);
 
 }*/
-
-ZooResult Zoologist::getCreaturesByLevel(int ** Creatures, int * numOfCreatures) {
-
-}

@@ -13,6 +13,8 @@ typedef enum {
     ZOO_SUCCESS, ZOO_ALLOCATION_ERROR, ZOO_NODE_ALREADY_EXISTS, ZOO_NODE_NOT_FOUND
 } ZooResult;
 
+class Zoologist; // forward-declaration to let SuperBeast know that zoologist exists
+
 class SuperBeast : public Animal {
 protected:
 
@@ -64,7 +66,7 @@ public:
     int getMostDangerousID () const;
 
     // throws badInput if dangerousID is null
-    void Zoologist::getMostDangerous (int * dangerousID);
+    void getMostDangerous (int * dangerousID);
 
     void setMostDangerousID (int mostDangerousID);
 
@@ -77,8 +79,6 @@ public:
     AVLTree<Animal, SuperBeast> & getTree ();
 
     void setTree (const AVLTree<Animal, SuperBeast> & tree);
-
-    ZooResult addCreature (int id, int level);
 
 };
 
