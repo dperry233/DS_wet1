@@ -57,6 +57,7 @@ int Zoologist::getMostDangerousID () const {
 }
 
 void Zoologist::setMostDangerousID (int mostDangerousID) {
+    if (mostDangerousID<=0) throw badInput();
     Zoologist::mostDangerousID = mostDangerousID;
 }
 
@@ -65,6 +66,7 @@ int Zoologist::getMagiID () const {
 }
 
 void Zoologist::setMagiID (int MagiID) {
+    if (MagiID<=0) throw badInput();
     Zoologist::MagiID = MagiID;
 }
 
@@ -80,10 +82,10 @@ void Zoologist::setTree (const AVLTree<Animal, SuperBeast> & tree) {
     Zoologist::tree = tree;
 }
 
-void Zoologist::getMostDangerous (int * dangerousID) {
+/*void Zoologist::getMostDangerous (int * dangerousID) {
     if (!dangerousID) throw badInput();
     *dangerousID = getMostDangerousID();
-}
+}*/
 
 /*ZooResult Zoologist::addCreature (int id, int level) {
     Animal key;
