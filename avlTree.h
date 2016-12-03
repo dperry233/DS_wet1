@@ -625,7 +625,16 @@ void inOrderToArray(AVLNode<keyType,dataType>* nNode, dataType* array, int* i) {
 	inOrderToArray(nNode->rightSon, array, i);
 }
 
+template<class keyType,class dataType>
+void AVLTree<keyType,dataType>::emptyTree() {
+	if (!rootNode) {
+		return;
+	}
+	rootNode->emptySubTree(rootNode);
 
+	size = 0;
+	rootNode = NULL;
+}
 
 
 
