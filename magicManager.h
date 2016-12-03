@@ -99,68 +99,10 @@ private:
 	}
 
 
-	void inOrderChange(AVLNode<int,SuperBeast>* node,int code,int factor){
-		if (!node) {
-			return;
-		}
-		inOrderChange(node->leftSon,code,factor);
-		if(node->key%code==0){
-			node->value.likes*=factor;
-		}
-		inOrderChange(node->rightSon,code,factor);
-
-	}
 
 
-	postTreeResult updatePosts(int postCode,int factor){
-		Post* originalTreeArray =(Post*)malloc(sizeof(Post)*this->IDtree->size);
-
-		int i=0;
-		inOrderToArray(likeTree->rootNode,originalTreeArray,&i);
-		Post* toChangeArray =(Post*)malloc(sizeof(Post)*this->IDtree->size);
-		Post* noChangeArray =(Post*)malloc(sizeof(Post)*this->IDtree->size);
-		Post zeroPost;
-		for(int x=0;x<i;x++){
-			toChangeArray[x]=zeroPost;
-			noChangeArray[x]=zeroPost;
-		}
-		int k=0,l=0;
-		for(int j=0;j<i;j++){
-			if((originalTreeArray[j].postId)%postCode==0){
-				toChangeArray[k]=originalTreeArray[j];
-				toChangeArray[k].likes*=factor;  //not sure if possible in this way
-				k++;
-			}else{
-				noChangeArray[l]=originalTreeArray[j];
-				l++;
-			}
-		}//arrays separated into 2 at this point
-		reverseArray(toChangeArray,k);
-		reverseArray(noChangeArray,l);
-		//merge arrays
-		for(int m=0,n=0,o=0;m<i;m++){
-
-			bool flag1=(toChangeArray[n])>(noChangeArray[o]);
-			if((flag1&&n<k)||o>=l){
-				originalTreeArray[m]=toChangeArray[n];
-				n++;
-			}else{
-				originalTreeArray[m]=noChangeArray[o];
-				o++;
-			}
 
 
-		}//arrays are merged in originalTreeArray
-		reverseArray(originalTreeArray,i);
-		free(noChangeArray);
-		free(toChangeArray);
-		int a=0;
-		inorderSwap(likeTree->rootNode,originalTreeArray,&a);
-		free(originalTreeArray);
-		inOrderChange(this->IDtree->rootNode,postCode,factor);
-		this->bestPost=this->likeTree->findMax();
-		return POSTTREE_SUCCESS;
-	}
 
 
 
@@ -310,10 +252,69 @@ MMStatusType MagicManager::releaseCreatureMM( int creatureID){
 
 
 
-MMStatusType MagicManager::ReplaceMagi(int magiID , int replacement){
-
-
-}
+//MMStatusType MagicManager::ReplaceMagi(int magiID , int replacement){
+//	if(magiID<=0||replacement<=0||magiID==replacement){
+//		return MM_INVALID_INPUT;
+//	}
+//	if(!magiTree->findIfValueExists(magiID)||!magiTree->findIfValueExists(replacement)){
+//		return MM_FAILURE;
+//	}
+//
+//
+//	int originialSize= this->magiTree->getValue(magiID)->getTree().size;
+//	int replacementSize= this->magiTree->getValue(replacement)->getTree().size;
+//
+//
+//	SuperBeast* originalTreeArray =(SuperBeast*)malloc(sizeof(SuperBeast)*originialSize);
+//	SuperBeast* replacementTreeArray =(SuperBeast*)malloc(sizeof(SuperBeast)*replacementSize);
+//
+//			int i=0;
+//			inOrderToArray(magiTree->getValue(magiID)->getTree().rootNode,originalTreeArray,&i);
+//			SuperBeast* toChangeArray =(SuperBeast*)malloc(sizeof(Post)*this->IDtree->size);
+//			SuperBeast* noChangeArray =(SuperBeast*)malloc(sizeof(SuperBeast)*this->IDtree->size);
+//			SuperBeast zeroPost;
+//			for(int x=0;x<i;x++){
+//				toChangeArray[x]=zeroPost;
+//				noChangeArray[x]=zeroPost;
+//			}
+//			int k=0,l=0;
+//			for(int j=0;j<i;j++){
+//				if((originalTreeArray[j].postId)%postCode==0){
+//					toChangeArray[k]=originalTreeArray[j];
+//					toChangeArray[k].likes*=factor;  //not sure if possible in this way
+//					k++;
+//				}else{
+//					noChangeArray[l]=originalTreeArray[j];
+//					l++;
+//				}
+//			}//arrays separated into 2 at this point
+//			reverseArray(toChangeArray,k);
+//			reverseArray(noChangeArray,l);
+//			//merge arrays
+//			for(int m=0,n=0,o=0;m<i;m++){
+//
+//				bool flag1=(toChangeArray[n])>(noChangeArray[o]);
+//				if((flag1&&n<k)||o>=l){
+//					originalTreeArray[m]=toChangeArray[n];
+//					n++;
+//				}else{
+//					originalTreeArray[m]=noChangeArray[o];
+//					o++;
+//				}
+//
+//
+//			}//arrays are merged in originalTreeArray
+//			reverseArray(originalTreeArray,i);
+//			free(noChangeArray);
+//			free(toChangeArray);
+//			int a=0;
+//			inorderSwap(likeTree->rootNode,originalTreeArray,&a);
+//			free(originalTreeArray);
+//			inOrderChange(this->IDtree->rootNode,postCode,factor);
+//			this->bestPost=this->likeTree->findMax();
+//			return POSTTREE_SUCCESS;
+//
+//}
 
 
 
