@@ -490,7 +490,7 @@ TreeResult AVLTree<keyType,dataType>::insertData(const keyType& iKey,const dataT
 		}
 		else {
 			return AVLTREE_NODE_ALREADY_EXISTS;
-			break; // TODO: Remove unreachable code
+			break;
 		}
 	}
 	tmpNode = newNode;
@@ -614,16 +614,6 @@ TreeResult AVLTree<keyType,dataType>::removeValue(keyType& iKey) {
 	return AVLTREE_SUCCESS;
 }
 
-template<class keyType,class dataType>
-void AVLTree<keyType,dataType>::emptyTree() {
-	if (!rootNode) {
-		return;
-	}
-	rootNode->emptySubTree(rootNode);
-
-	size = 0;
-	rootNode = NULL;
-}
 
 template<class keyType,class dataType>
 void inOrderToArray(AVLNode<keyType,dataType>* nNode, dataType* array, int* i) {
@@ -634,6 +624,10 @@ void inOrderToArray(AVLNode<keyType,dataType>* nNode, dataType* array, int* i) {
 	array[(*i)++] = nNode->value;
 	inOrderToArray(nNode->rightSon, array, i);
 }
+
+
+
+
 
 
 
