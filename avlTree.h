@@ -653,8 +653,6 @@ AVLTree<keyType,dataType>* buildEmpty(int n){
 
 
 
-	 AVLTree<int,SuperBeast>* newTree= new AVLTree<int,SuperBeast> ;
-
 
 
 

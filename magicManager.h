@@ -11,20 +11,7 @@
 #include <stdlib.h>
 #include "avlTree.h"
 #include "Zoologist.h"
-#include "Animal.h"
 
-//temp stubs
-
-class Magi {
-
-
-};
-
-class LevelWrapper {
-
-};
-
-// end of temp stubs
 
 typedef enum {
     MM_SUCCESS = 0,
@@ -93,7 +80,7 @@ private:
     }
 
 
-    void inorderSwap (AVLNode<SuperBeast, SuperBeast> * node, SuperBeast * arr, int * i) {
+    void inorderSwap (AVLNode<Animal, SuperBeast> * node, SuperBeast * arr, int * i) {
         if (!node) {
             return;
         }
@@ -309,9 +296,9 @@ MMStatusType MagicManager::ReplaceMagi(int magiID , int replacement){
 			reverseArray(combinedArray,i);
 			free(originalTreeArray);
 			free(replacementTreeArray);
-			AVLTree<SuperBeast,SuperBeast> newTree= this->buildDummy(combinedSize);
+			AVLTree<Animal,SuperBeast>* newTree= this->buildDummy(combinedSize);
 			int a=0;
-			inorderSwap(newTree.rootNode,combinedArray,&a);
+			inorderSwap(newTree->rootNode,combinedArray,&a);
 			free(combinedArray);
 
 			//inOrderChange(this->IDtree->rootNode,postCode,factor);

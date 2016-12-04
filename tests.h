@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include "magicManager.h"
 
 extern std::string location; // Used for finding the origin of an exception
 
