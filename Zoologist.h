@@ -8,10 +8,10 @@
 #include "Animal.h"
 #include "avlTree.h"
 
-typedef enum {
+/*typedef enum {
     ZOO_INVALID_INPUT,
     ZOO_SUCCESS, ZOO_ALLOCATION_ERROR, ZOO_NODE_ALREADY_EXISTS, ZOO_NODE_NOT_FOUND
-} ZooResult;
+} ZooResult;*/
 
 class Zoologist; // forward-declaration to let SuperBeast know that zoologist exists
 
@@ -27,7 +27,7 @@ public:
     explicit SuperBeast (int id, int level = 0, SuperBeast * first = NULL, SuperBeast * second = NULL,
                          Zoologist * Owner = NULL);
 
-    ~SuperBeast ();
+    // ~SuperBeast ();
 
     SuperBeast (const SuperBeast & original);
 
@@ -66,13 +66,11 @@ public:
 
     int getMostDangerousID () const;
 
-    // throws badInput if dangerousID is NULL
-    void getMostDangerous (int * dangerousID);
-
     void setMostDangerousID (int mostDangerousID);
 
     int getMagiID () const;
 
+    // throws badInput if ID<=0
     void setMagiID (int MagiID);
 
     const AVLTree<Animal, SuperBeast> & getTree () const;
