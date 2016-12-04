@@ -5,9 +5,9 @@
  *  Created on: Apr 28, 2016
  *      Author: user
  */
-#include "magicManager.h"
 
 #include "library1.h"
+#include "magicManager.h"
 
 void* Init(){
 	MagicManager* tm;

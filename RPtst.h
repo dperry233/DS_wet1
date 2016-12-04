@@ -1,17 +1,15 @@
-//
-// Created by Krumpet on 03-Dec-16.
-//
+/*
+* Rptst.h
+*/
 
-#ifndef PRJMYAPP_TESTS_H
-#define PRJMYAPP_TESTS_H
+#ifndef Rptst_H_
+#define Rptst_H_
 
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include "magicManager.h"
-#include "library1.h"
 
-extern std::string location; // Used for finding the origin of an exception
+std::string location; // Used for finding the origin of an exception
 
 #define FAIL(message) do { \
 	std::ostringstream os; \
@@ -82,4 +80,4 @@ catch (...) { \
 		return false; \
 	}
 
-#endif //PRJMYAPP_TESTS_H
+#endif /* Rptst_H_ */
