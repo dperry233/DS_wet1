@@ -637,6 +637,30 @@ void AVLTree<keyType,dataType>::emptyTree() {
 }
 
 
+static bool powerOf2(int num) {
+   if (num == 0) return false;
+
+   bool isPower = !(num & (num-1));
+   return isPower;
+}
+
+
+template<class keyType,class dataType>
+AVLTree<keyType,dataType>* buildEmpty(int n){
+	int i=n;
+	while(!powerOf2(i+1)){
+		i++;
+	}
+
+
+
+	 AVLTree<int,SuperBeast>* newTree= new AVLTree<int,SuperBeast> ;
+
+
+
+
+}
+
 
 
 
