@@ -103,7 +103,6 @@ public:
         }
     }
 
-
     AVLNode<keyType, dataType> * setLeftSon (AVLNode<keyType, dataType> * newLeftNode) {
         if (NULL != newLeftNode) {
             newLeftNode->father = this;
@@ -127,15 +126,9 @@ public:
             return true;
         }
         if (this->key > iKey) {
-            if (NULL == leftSon) {
-                return false;
-            }
-            return leftSon->findByKey(iKey);
+            return NULL != leftSon && leftSon->findByKey(iKey);
         }
-        if (NULL == rightSon) {
-            return false;
-        }
-        return rightSon->findByKey(iKey);
+        return NULL != rightSon && rightSon->findByKey(iKey);
     }
 
     AVLNode<keyType, dataType> * returnNode (keyType iKey) {
@@ -175,8 +168,6 @@ public:
         emptySubTree(nNode->rightSon);
         delete nNode;
         nNode = NULL;
-
-
     }
 
 };
@@ -341,6 +332,7 @@ public:
         inorder(node->rightSon, f);
     }
 
+    AVLTree<keyType, dataType> * buildEmpty (int n);
 
     dataType * findMax () {
         if (NULL == rootNode) {
@@ -423,10 +415,7 @@ public:
 
 template<class keyType, class dataType>
 bool AVLTree<keyType, dataType>::findIfValueExists (keyType & iKey) {
-    if (!rootNode) { //nothing in the tree
-        return false;
-    }
-    return rootNode->findByKey(iKey);
+    return rootNode != NULL && rootNode->findByKey(iKey);
 }
 
 template<class keyType, class dataType>
@@ -478,7 +467,6 @@ TreeResult AVLTree<keyType, dataType>::insertData (const keyType & iKey, const d
             }
         } else {
             return AVLTREE_NODE_ALREADY_EXISTS;
-            break;
         }
     }
     tmpNode = newNode;
@@ -646,6 +634,7 @@ TreeResult buildFullTree (AVLNode<keyType, dataType> * root, int numOfRows) {
         return res;
     }
     root->rightSon->father = root; // fix right son to know who's his daddy
+    return AVLTREE_SUCCESS;
 };
 
 template<class keyType, class dataType>
@@ -687,14 +676,15 @@ AVLTree<keyType, dataType> * buildEmptyHelper (int numOfRows, int toRemove) {
 
 // returns empty tree if n==0 or NULL if there was an error
 template<class keyType, class dataType>
-AVLTree<keyType, dataType> * buildEmpty (int n) {
-    if (0 == n) return new AVLTree<keyType, dataType>();
+AVLTree<keyType, dataType> * AVLTree<keyType, dataType>::buildEmpty (int n) {
+    if (0 == n) return new AVLTree<keyType, dataType>;
     int numOfNodes = 1, powOfTwo = 0;
     do {
         numOfNodes *= 2;
         powOfTwo++;
-        if (numOfNodes - 1 >= n) return buildEmptyHelper(powOfTwo, numOfNodes - n - 1);
+        if (numOfNodes - 1 >= n) break;
     } while (numOfNodes - 1 < n);
+    return buildEmptyHelper(powOfTwo, numOfNodes - n - 1);
 }
 
 #endif /* AVLTREE_H_ */
