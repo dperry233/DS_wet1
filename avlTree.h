@@ -332,8 +332,6 @@ public:
         inorder(node->rightSon, f);
     }
 
-    AVLTree<keyType, dataType> * buildEmpty (int n);
-
     dataType * findMax () {
         if (NULL == rootNode) {
             return NULL;
@@ -625,7 +623,9 @@ TreeResult buildFullTree (AVLNode<keyType, dataType> * root, int numOfRows) {
         delete root;
         return res;
     }
-    root->leftSon->father = root; // fix left son to know who's his daddy
+    if (root->leftSon) {
+        root->leftSon->father = root; // fix left son to know who's his daddy
+    }
     res = buildFullTree(root->rightSon, numOfRows - 1);
     if (res != AVLTREE_SUCCESS) {
         if (root->rightSon) delete root->rightSon;
@@ -633,13 +633,16 @@ TreeResult buildFullTree (AVLNode<keyType, dataType> * root, int numOfRows) {
         delete root;
         return res;
     }
-    root->rightSon->father = root; // fix right son to know who's his daddy
+    if (root->rightSon) {
+        root->rightSon->father = root; // fix right son to know who's his daddy
+    }
     return AVLTREE_SUCCESS;
 };
 
 template<class keyType, class dataType>
 void trimHighestNodesHelper (AVLNode<keyType, dataType> * root, int * num) {
     if (0 == *num) return; // nothing left to delete
+    if (!root) return;
     if (root->rightSon) {
         trimHighestNodesHelper(root->rightSon, num);
     }
@@ -664,7 +667,7 @@ AVLTree<keyType, dataType> * trimHighestNodes (AVLTree<keyType, dataType> * tree
 
 template<class keyType, class dataType>
 AVLTree<keyType, dataType> * buildEmptyHelper (int numOfRows, int toRemove) {
-    AVLTree<keyType, dataType> * fullTree = new AVLTree<keyType, dataType>();
+    AVLTree<keyType, dataType> * fullTree = new AVLTree<keyType, dataType>;
     if (AVLTREE_SUCCESS != buildFullTree(fullTree->rootNode, numOfRows)) {
         delete fullTree;
         return NULL;
@@ -676,15 +679,20 @@ AVLTree<keyType, dataType> * buildEmptyHelper (int numOfRows, int toRemove) {
 
 // returns empty tree if n==0 or NULL if there was an error
 template<class keyType, class dataType>
-AVLTree<keyType, dataType> * AVLTree<keyType, dataType>::buildEmpty (int n) {
-    if (0 == n) return new AVLTree<keyType, dataType>;
+AVLTree<keyType, dataType> * buildEmpty (int n) {
+    if (0 == n) return new AVLTree<keyType, dataType>; // empty tree
+    if (1 == n) { // just the root
+        AVLTree<keyType, dataType> * tree = new AVLTree<keyType, dataType>;
+        tree->insertData(keyType(), dataType());
+        return tree;
+    }
     int numOfNodes = 1, powOfTwo = 0;
     do {
         numOfNodes *= 2;
         powOfTwo++;
         if (numOfNodes - 1 >= n) break;
     } while (numOfNodes - 1 < n);
-    return buildEmptyHelper<keyType,dataType>(powOfTwo, numOfNodes - n - 1);
+    return buildEmptyHelper<keyType, dataType>(powOfTwo, numOfNodes - n - 1);
 }
 
 #endif /* AVLTREE_H_ */

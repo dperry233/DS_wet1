@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include "RPtst.h"
 #include "library1.h"
+#include "avlTree.h"
+#include "Animal.h"
+#include "Zoologist.h"
 
 using namespace std;
 
@@ -366,15 +369,26 @@ bool ResearchProjcectGetAllCreaturesByLevelTest() {
 	return true;
 }
 
+bool ranFullTreeTest() {
+	AVLTree<Animal,SuperBeast> tree;
+	tree.insertData(Animal(),SuperBeast());
+	ASSERT_EQUALS(tree.size,1);
+	AVLTree<Animal,SuperBeast> * tree2 = buildEmpty<Animal,SuperBeast>(3); // TODO: works for 0, 1, 3 but not 2
+	cout << tree2->size << endl;
+
+	return true;
+}
+
 bool researchProjectTest() {
-	RUN_TEST(ResearchProjectInitQuitStressTest);
-	RUN_TEST(ResearchProjcectAddMagiTest);
-	RUN_TEST(ResearchProjcectAddCreatureTest);
-	RUN_TEST(ResearchProjcectReleaseCreatureTest);
-	//RUN_TEST(ResearchProjcectReplaceMagiTest);
-	RUN_TEST(ResearchProjcectIncreaseLevelTest);
-	RUN_TEST(ResearchProjcectGetMostDangerousTest);
-	RUN_TEST(ResearchProjcectGetAllCreaturesByLevelTest);
+//	RUN_TEST(ResearchProjectInitQuitStressTest);
+//	RUN_TEST(ResearchProjcectAddMagiTest);
+//	RUN_TEST(ResearchProjcectAddCreatureTest);
+//	RUN_TEST(ResearchProjcectReleaseCreatureTest);
+//	//RUN_TEST(ResearchProjcectReplaceMagiTest);
+//	RUN_TEST(ResearchProjcectIncreaseLevelTest);
+//	RUN_TEST(ResearchProjcectGetMostDangerousTest);
+//	RUN_TEST(ResearchProjcectGetAllCreaturesByLevelTest);
+	RUN_TEST(ranFullTreeTest);
 
 	return true;
 }
