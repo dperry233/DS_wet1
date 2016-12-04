@@ -123,6 +123,23 @@ private:
     }
 
 
+
+	AVLTree<Animal,SuperBeast>* buildDummy(int n){
+		AVLTree<Animal,SuperBeast>* newTree=	new AVLTree<Animal,SuperBeast>;
+
+
+		for(int i=0;i<n;i++){
+			SuperBeast tmp(i,i);
+			Animal tmp1(i,i);
+			newTree->insertData(tmp1,tmp);
+
+		}
+
+
+		return newTree;
+	}
+
+
 };
 
 
@@ -245,69 +262,63 @@ MMStatusType MagicManager::releaseCreatureMM (int creatureID) {
 
 
 
-//MMStatusType MagicManager::ReplaceMagi(int magiID , int replacement){
-//	if(magiID<=0||replacement<=0||magiID==replacement){
-//		return MM_INVALID_INPUT;
-//	}
-//	if(!magiTree->findIfValueExists(magiID)||!magiTree->findIfValueExists(replacement)){
-//		return MM_FAILURE;
-//	}
-//
-//
-//	int originialSize= this->magiTree->getValue(magiID)->getTree().size;
-//	int replacementSize= this->magiTree->getValue(replacement)->getTree().size;
-//
-//
-//	SuperBeast* originalTreeArray =(SuperBeast*)malloc(sizeof(SuperBeast)*originialSize);
-//	SuperBeast* replacementTreeArray =(SuperBeast*)malloc(sizeof(SuperBeast)*replacementSize);
-//
-//			int i=0;
-//			inOrderToArray(magiTree->getValue(magiID)->getTree().rootNode,originalTreeArray,&i);
-//			SuperBeast* toChangeArray =(SuperBeast*)malloc(sizeof(Post)*this->IDtree->size);
-//			SuperBeast* noChangeArray =(SuperBeast*)malloc(sizeof(SuperBeast)*this->IDtree->size);
-//			SuperBeast zeroPost;
-//			for(int x=0;x<i;x++){
-//				toChangeArray[x]=zeroPost;
-//				noChangeArray[x]=zeroPost;
-//			}
-//			int k=0,l=0;
-//			for(int j=0;j<i;j++){
-//				if((originalTreeArray[j].postId)%postCode==0){
-//					toChangeArray[k]=originalTreeArray[j];
-//					toChangeArray[k].likes*=factor;  //not sure if possible in this way
-//					k++;
-//				}else{
-//					noChangeArray[l]=originalTreeArray[j];
-//					l++;
-//				}
-//			}//arrays separated into 2 at this point
-//			reverseArray(toChangeArray,k);
-//			reverseArray(noChangeArray,l);
-//			//merge arrays
-//			for(int m=0,n=0,o=0;m<i;m++){
-//
-//				bool flag1=(toChangeArray[n])>(noChangeArray[o]);
-//				if((flag1&&n<k)||o>=l){
-//					originalTreeArray[m]=toChangeArray[n];
-//					n++;
-//				}else{
-//					originalTreeArray[m]=noChangeArray[o];
-//					o++;
-//				}
-//
-//
-//			}//arrays are merged in originalTreeArray
-//			reverseArray(originalTreeArray,i);
-//			free(noChangeArray);
-//			free(toChangeArray);
-//			int a=0;
-//			inorderSwap(likeTree->rootNode,originalTreeArray,&a);
-//			free(originalTreeArray);
-//			inOrderChange(this->IDtree->rootNode,postCode,factor);
-//			this->bestPost=this->likeTree->findMax();
-//			return POSTTREE_SUCCESS;
-//
-//}
+MMStatusType MagicManager::ReplaceMagi(int magiID , int replacement){
+	if(magiID<=0||replacement<=0||magiID==replacement){
+		return MM_INVALID_INPUT;
+	}
+	if(!magiTree->findIfValueExists(magiID)||!magiTree->findIfValueExists(replacement)){
+		return MM_FAILURE;
+	}
+
+
+	int originialSize= this->magiTree->getValue(magiID)->getTree().size;
+	int replacementSize= this->magiTree->getValue(replacement)->getTree().size;
+	int combinedSize=originialSize+replacementSize;
+
+	SuperBeast* originalTreeArray =(SuperBeast*)malloc(sizeof(SuperBeast)*originialSize);
+	SuperBeast* replacementTreeArray =(SuperBeast*)malloc(sizeof(SuperBeast)*replacementSize);
+	SuperBeast* combinedArray =(SuperBeast*)malloc(sizeof(SuperBeast)*(replacementSize+originialSize));
+			int i=0,j=0;
+			inOrderToArray(magiTree->getValue(magiID)->getTree().rootNode,originalTreeArray,&i);
+			inOrderToArray(magiTree->getValue(replacement)->getTree().rootNode,replacementTreeArray,&j);
+
+			//change owner here
+
+
+
+			//arrays separated into 2 at this point
+			reverseArray(originalTreeArray,originialSize);
+			reverseArray(replacementTreeArray,replacementSize);
+			//merge arrays
+			for(int i=0,j=0,k=0;i<combinedSize;i++){
+
+						bool flag1=(replacementTreeArray[k])>(originalTreeArray[j]);
+						if((flag1&&k>0)){
+							originalTreeArray[i]=replacementTreeArray[i];
+							j++;
+						}else{
+							replacementTreeArray[i]=originalTreeArray[i];
+							i++;
+						}
+
+
+					}
+
+
+			//arrays are merged in CombinedArray
+			reverseArray(combinedArray,i);
+			free(originalTreeArray);
+			free(replacementTreeArray);
+			AVLTree<SuperBeast,SuperBeast> newTree= this->buildDummy(combinedSize);
+			int a=0;
+			inorderSwap(newTree.rootNode,combinedArray,&a);
+			free(combinedArray);
+
+			//inOrderChange(this->IDtree->rootNode,postCode,factor);
+			//this->bestPost=this->likeTree->findMax();
+			return MM_SUCCESS;
+
+}
 
 
 
