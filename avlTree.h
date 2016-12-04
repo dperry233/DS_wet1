@@ -684,7 +684,7 @@ AVLTree<keyType, dataType> * AVLTree<keyType, dataType>::buildEmpty (int n) {
         powOfTwo++;
         if (numOfNodes - 1 >= n) break;
     } while (numOfNodes - 1 < n);
-    return buildEmptyHelper(powOfTwo, numOfNodes - n - 1);
+    return buildEmptyHelper<keyType,dataType>(powOfTwo, numOfNodes - n - 1);
 }
 
 #endif /* AVLTREE_H_ */
