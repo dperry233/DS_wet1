@@ -9,6 +9,7 @@ protected:
     int ID;
 
 public:
+    // throw badInput if ID<=0
     explicit Animal (int id, int level = 0); // default c'tor
     Animal (const Animal & original); // copy c'tor
 
@@ -22,8 +23,6 @@ public:
     void increaseLevel (int delta);
 
     void setID (int newID);
-
-    Animal & operator= (const Animal & rhs) = default;
 
     bool operator== (const Animal & rhs);
 

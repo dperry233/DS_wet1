@@ -16,7 +16,7 @@ SuperBeast::SuperBeast (const SuperBeast & original) : Animal(original), beast1(
 
 SuperBeast::SuperBeast (const Animal & animal, Zoologist * owner, SuperBeast * first,
                         SuperBeast * second) : Animal(animal), beast1(first), beast2(second),
-                                                         Owner(owner) {}
+                                               Owner(owner) {}
 
 SuperBeast * SuperBeast::getBeast1 () const {
     return beast1;
@@ -43,12 +43,12 @@ void SuperBeast::setOwner (Zoologist * owner) {
 }
 
 Zoologist::Zoologist (const Zoologist & original) {
-    mostDangerousID = original.mostDangerousID;
     tree = original.tree;
+    mostDangerousID = original.mostDangerousID;
     MagiID = original.MagiID;
 }
 
-Zoologist::Zoologist (int MagiID) : MagiID(MagiID), mostDangerousID(0), tree() {
+Zoologist::Zoologist (int MagiID) : tree(), mostDangerousID(0), MagiID(MagiID) {
     if (MagiID <= 0) throw badInput();
 }
 
@@ -57,6 +57,7 @@ int Zoologist::getMostDangerousID () const {
 }
 
 void Zoologist::setMostDangerousID (int mostDangerousID) {
+    if (mostDangerousID < 0) throw badInput();
     Zoologist::mostDangerousID = mostDangerousID;
 }
 
@@ -65,6 +66,7 @@ int Zoologist::getMagiID () const {
 }
 
 void Zoologist::setMagiID (int MagiID) {
+    if (MagiID <= 0) throw badInput();
     Zoologist::MagiID = MagiID;
 }
 
@@ -80,10 +82,10 @@ void Zoologist::setTree (const AVLTree<Animal, SuperBeast> & tree) {
     Zoologist::tree = tree;
 }
 
-void Zoologist::getMostDangerous (int * dangerousID) {
+/*void Zoologist::getMostDangerous (int * dangerousID) {
     if (!dangerousID) throw badInput();
     *dangerousID = getMostDangerousID();
-}
+}*/
 
 /*ZooResult Zoologist::addCreature (int id, int level) {
     Animal key;
