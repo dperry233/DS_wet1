@@ -10,7 +10,7 @@ protected:
 
 public:
     // throw badInput if ID<=0
-    explicit Animal (int id, int level = 0); // default c'tor
+    explicit Animal (int id = 1, int level = 0); // default c'tor
     Animal (const Animal & original); // copy c'tor
 
     virtual ~Animal ();

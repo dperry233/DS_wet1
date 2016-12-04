@@ -24,7 +24,7 @@ protected:
     Zoologist * Owner;
 
 public:
-    explicit SuperBeast (int id, int level = 0, SuperBeast * first = NULL, SuperBeast * second = NULL,
+    explicit SuperBeast (int id = 1, int level = 0, SuperBeast * first = NULL, SuperBeast * second = NULL,
                          Zoologist * Owner = NULL);
 
     ~SuperBeast ();
