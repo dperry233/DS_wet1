@@ -188,6 +188,8 @@ public:
 
 	}
 
+
+
 };
 
 
@@ -507,12 +509,12 @@ TreeResult AVLTree<keyType,dataType>::removeValue(keyType& iKey) {
 	if (!rootNode || !findIfValueExists(iKey)) {
 		return AVLTREE_NODE_NOT_FOUND;
 	}
-	/*else if (size == 1) { // TODO: testing debug solution
+	else if (size == 1) {
 		delete rootNode;
 		size--;
 		rootNode = NULL;
 		return AVLTREE_SUCCESS;
-	}*/
+	}
 	AVLNode<keyType,dataType>* parent = NULL;
 	AVLNode<keyType,dataType>* tmp = rootNode->returnNode(iKey);
 	if (tmp->father) {
@@ -534,7 +536,7 @@ TreeResult AVLTree<keyType,dataType>::removeValue(keyType& iKey) {
 				parent = parent->father;
 			}
 		}
-		else { //then this one is the root. // TODO: check if commenting out delete tmp does the trick
+		else { //then this one is the root.
 			rootNode = NULL;
 			delete tmp;
 		}
@@ -609,7 +611,6 @@ TreeResult AVLTree<keyType,dataType>::removeValue(keyType& iKey) {
 		}
 	}
 	size--;
-	//if (0==size) rootNode=NULL; // TODO: Check if this works instead of doing something different for size=1
 	return AVLTREE_SUCCESS;
 }
 
