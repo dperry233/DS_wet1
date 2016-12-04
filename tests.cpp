@@ -223,7 +223,10 @@ bool managerTest () {
     ASSERT_EQUALS(db.getIdTree()->findMax()->getLevel(), 6);
 
     ASSERT_EQUALS(MM_SUCCESS, db.releaseCreatureMM(4));
-    ASSERT_EQUALS(db.GetmostDangerousMM(-1, &danger), NULL);
+    ASSERT_EQUALS(db.GetmostDangerousMM(-1, &danger), MM_SUCCESS);
+    ASSERT_EQUALS(-1,danger);
+    ASSERT_EQUALS(db.GetmostDangerousMM(1, &danger2), MM_SUCCESS);
+    ASSERT_EQUALS(-1,danger2);
 
     return true;
 }
