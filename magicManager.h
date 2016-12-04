@@ -394,10 +394,8 @@ MMStatusType MagicManager::GetmostDangerousMM (int MagiID, int * creatureID) {
         }
         // need to return most dangerous in whole system, check if there is one
         Animal * mostlyHarmless=this->mostDangerous;
-        {
-            *creatureID= !mostlyHarmless ? -1 : this->mostDangerous->getID();
-            return MM_SUCCESS;
-        }
+        *creatureID=mostlyHarmless->getID();
+        return MM_SUCCESS;
     }
 
 
