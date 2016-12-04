@@ -207,9 +207,20 @@ bool managerTest () {
     // Now just 1->[(4,5)] 2->NULL
     ASSERT_EQUALS(danger,4);
 
-    ASSERT_EQUALS(db.increaseLevelMM(9,2),MM_INVALID_INPUT);
+    ASSERT_EQUALS(db.increaseLevelMM(9,2),MM_FAILURE);
+
     ASSERT_EQUALS(db.increaseLevelMM(4,0),MM_INVALID_INPUT);
     ASSERT_EQUALS(db.increaseLevelMM(4,-1),MM_INVALID_INPUT);
+
+    ASSERT_EQUALS(db.increaseLevelMM(4,1),MM_SUCCESS); // now is 4,6
+
+    danger=0;
+    danger2=0;
+    ASSERT_EQUALS(db.GetmostDangerousMM(-1, &danger), MM_SUCCESS);
+    ASSERT_EQUALS(db.GetmostDangerousMM(1, &danger2), MM_SUCCESS);
+    ASSERT_EQUALS(danger,4);
+    ASSERT_EQUALS(danger2,4);
+    ASSERT_EQUALS(db.getIdTree()->findMax()->getLevel(),6);
 
     return true;
 }

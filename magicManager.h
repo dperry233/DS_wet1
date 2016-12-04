@@ -67,6 +67,9 @@ public:
 	MMStatusType GetAllCreaturesByLevelMM ( int MagiID,
 			int **Creatures, int* numOfCreatures);
 
+    AVLTree<int, SuperBeast> * getIdTree () const {
+        return IdTree;
+    }
 
 
 private:
