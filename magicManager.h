@@ -333,27 +333,27 @@ MMStatusType MagicManager::increaseLevelMM( int creatureID, int levelIncrease){
 	SuperBeast tmpSuperBeast(*this->IdTree->getValue(creatureID));
 	this->releaseCreatureMM(creatureID);
 
+	tmpSuperBeast.increaseLevel(levelIncrease);
 
 	TreeResult allFlag=this->IdTree->insertData(creatureID,tmpSuperBeast);
-		if(allFlag==AVLTREE_ALLOCATION_ERROR){
-			return MM_FAILURE;
-		}
-		allFlag=this->levelTree->insertData(tmpSuperBeast,tmpSuperBeast);
-		if(allFlag==AVLTREE_ALLOCATION_ERROR){
-			this->IdTree->removeValue(creatureID);
-			return MM_ALLOCATION_ERROR;
-		}
+	if(allFlag==AVLTREE_ALLOCATION_ERROR){
+		return MM_FAILURE;
+	}
+	allFlag=this->levelTree->insertData(tmpSuperBeast,tmpSuperBeast);
+	if(allFlag==AVLTREE_ALLOCATION_ERROR){
+		this->IdTree->removeValue(creatureID);
+		return MM_ALLOCATION_ERROR;
+	}
 
-
-		TreeResult magiFlag=tmpSuperBeast.getOwner()->getTree().insertData(tmpSuperBeast,tmpSuperBeast);
-		if(magiFlag==AVLTREE_ALLOCATION_ERROR){
-			this->IdTree->removeValue(creatureID);
-			this->levelTree->removeValue(tmpSuperBeast);
-			return MM_ALLOCATION_ERROR;
-		}
-		if(allFlag==AVLTREE_NODE_ALREADY_EXISTS||magiFlag==AVLTREE_NODE_ALREADY_EXISTS){
-			return MM_FAILURE;//should not get here as there is a check for it above
-		}
+	TreeResult magiFlag=tmpSuperBeast.getOwner()->getTree().insertData(tmpSuperBeast,tmpSuperBeast);
+	if(magiFlag==AVLTREE_ALLOCATION_ERROR){
+		this->IdTree->removeValue(creatureID);
+		this->levelTree->removeValue(tmpSuperBeast);
+		return MM_ALLOCATION_ERROR;
+	}
+	if(allFlag==AVLTREE_NODE_ALREADY_EXISTS||magiFlag==AVLTREE_NODE_ALREADY_EXISTS){
+		return MM_FAILURE;//should not get here as there is a check for it above
+	}
 
 		//set pointers here
 
@@ -377,6 +377,7 @@ MMStatusType MagicManager::increaseLevelMM( int creatureID, int levelIncrease){
 		tmpSuperBeast.getOwner()->getTree().getValue(tmpSuperBeast)->setOwner(ownerPtr);
 		tmpSuperBeast.getOwner()->getTree().getValue(tmpSuperBeast)->setBeast1(idTreePtr);
 		tmpSuperBeast.getOwner()->getTree().getValue(tmpSuperBeast)->setBeast2(levelTreePtr);
+
 
 		mostDangerous= this->levelTree->findMax();
 

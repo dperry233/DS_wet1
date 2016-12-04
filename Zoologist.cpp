@@ -57,7 +57,7 @@ int Zoologist::getMostDangerousID () const {
 }
 
 void Zoologist::setMostDangerousID (int mostDangerousID) {
-    if (mostDangerousID<=0) throw badInput();
+    if (mostDangerousID<0) throw badInput();
     Zoologist::mostDangerousID = mostDangerousID;
 }
 

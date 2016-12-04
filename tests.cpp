@@ -112,7 +112,6 @@ bool beastTest () {
     ASSERT_THROW(badInput, Fred.setMagiID(0));
     ASSERT_THROW(badInput, Fred.setMagiID(-1));
     ASSERT_THROW(badInput, Fred.setMostDangerousID(-1));
-    ASSERT_THROW(badInput, Fred.setMostDangerousID(0));
     ASSERT_NO_THROW(Fred.setMostDangerousID(danger.getID()));
     ASSERT_EQUALS(2, Fred.getMostDangerousID());
 
@@ -202,11 +201,15 @@ bool managerTest () {
     ASSERT_EQUALS(danger2, danger);
 
     MMStatusType status=db.releaseCreatureMM(5);
-    cout << "we don't reach here" << endl;
-    //ASSERT_EQUALS(status,MM_SUCCESS);
-    //ASSERT_EQUALS(db.releaseCreatureMM(5),MM_SUCCESS);
-    //ASSERT_EQUALS(db.GetmostDangerousMM(-1, &danger), MM_SUCCESS);
-    //ASSERT_EQUALS(danger,4);
+    ASSERT_EQUALS(status,MM_SUCCESS);
+    ASSERT_EQUALS(db.releaseCreatureMM(5),MM_FAILURE);
+    ASSERT_EQUALS(db.GetmostDangerousMM(-1, &danger), MM_SUCCESS);
+    // Now just 1->[(4,5)] 2->NULL
+    ASSERT_EQUALS(danger,4);
+
+    ASSERT_EQUALS(db.increaseLevelMM(9,2),MM_INVALID_INPUT);
+    ASSERT_EQUALS(db.increaseLevelMM(4,0),MM_INVALID_INPUT);
+    ASSERT_EQUALS(db.increaseLevelMM(4,-1),MM_INVALID_INPUT);
 
     return true;
 }
