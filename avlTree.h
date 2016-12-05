@@ -167,7 +167,6 @@ public:
         emptySubTree(nNode->leftSon);
         emptySubTree(nNode->rightSon);
         delete nNode;
-        nNode = NULL;
     }
 
 };
@@ -176,6 +175,10 @@ public:
 typedef enum {
     AVLTREE_SUCCESS, AVLTREE_ALLOCATION_ERROR, AVLTREE_NODE_ALREADY_EXISTS, AVLTREE_NODE_NOT_FOUND
 } TreeResult;
+
+typedef enum {
+    RIGHT, LEFT
+} Direction;
 
 template<class keyType, class dataType>
 class AVLTree {
@@ -609,33 +612,38 @@ void AVLTree<keyType, dataType>::emptyTree () {
 //}
 
 template<class keyType, class dataType>
-TreeResult buildFullTree (AVLNode<keyType, dataType> * root, int numOfRows) {
-    if (0 == numOfRows) return AVLTREE_SUCCESS;
+TreeResult buildFullTree (AVLNode<keyType, dataType> * root, int numOfRows,
+                          AVLNode<keyType, dataType> * parent,
+                          Direction direction) { // TODO: This has leaks! need to update sons after allocation
+    if (0 == numOfRows) {
+        return AVLTREE_SUCCESS;
+    } // we're done
     try {
         root = new AVLNode<keyType, dataType>(keyType(), dataType());
+        if (NULL != parent) {
+            root->father = parent;
+            if (LEFT == direction) root->father->setLeftSon(root);
+            else root->father->setRightSon(root);
+        }
     }
     catch (std::bad_alloc &) {
         return AVLTREE_ALLOCATION_ERROR;
     }
-    TreeResult res = buildFullTree(root->leftSon, numOfRows - 1);
+    TreeResult res = buildFullTree(root->leftSon, numOfRows - 1, root, LEFT);
     if (res != AVLTREE_SUCCESS) {
         if (root->leftSon) delete root->leftSon;
         delete root;
         return res;
     }
-    if (root->leftSon) {
-        root->leftSon->father = root; // fix left son to know who's his daddy
-    }
-    res = buildFullTree(root->rightSon, numOfRows - 1);
+
+    res = buildFullTree(root->rightSon, numOfRows - 1, root, RIGHT);
     if (res != AVLTREE_SUCCESS) {
         if (root->rightSon) delete root->rightSon;
         delete root->leftSon;
         delete root;
         return res;
     }
-    if (root->rightSon) {
-        root->rightSon->father = root; // fix right son to know who's his daddy
-    }
+
     return AVLTREE_SUCCESS;
 };
 
@@ -668,7 +676,7 @@ AVLTree<keyType, dataType> * trimHighestNodes (AVLTree<keyType, dataType> * tree
 template<class keyType, class dataType>
 AVLTree<keyType, dataType> * buildEmptyHelper (int numOfRows, int toRemove) {
     AVLTree<keyType, dataType> * fullTree = new AVLTree<keyType, dataType>;
-    if (AVLTREE_SUCCESS != buildFullTree(fullTree->rootNode, numOfRows)) {
+    if (AVLTREE_SUCCESS != buildFullTree<keyType, dataType>(fullTree->rootNode, numOfRows, NULL, RIGHT)) { // direction doesn't matter here
         delete fullTree;
         return NULL;
     }
