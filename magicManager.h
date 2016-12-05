@@ -261,6 +261,8 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
     int replacementSize = this->magiTree->getValue(replacement)->getTree()->size;
     int combinedSize = originialSize + replacementSize;
 
+
+    // TODO: Possibly allocating 0 size array - if the target has no animals, just remove original, change ID, and reinsert
     SuperBeast * originalTreeArray = (SuperBeast *) malloc(sizeof(SuperBeast) * originialSize);
     SuperBeast * replacementTreeArray = (SuperBeast *) malloc(sizeof(SuperBeast) * replacementSize);
     SuperBeast * combinedArray = (SuperBeast *) malloc(sizeof(SuperBeast) * (replacementSize + originialSize));

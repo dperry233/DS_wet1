@@ -585,7 +585,7 @@ TreeResult AVLTree<keyType, dataType>::removeValue (keyType & iKey) {
 
 template<class keyType, class dataType>
 void inOrderToArray (AVLNode<keyType, dataType> * nNode, dataType * array, int * i) {
-    if (!nNode) {
+    if (!nNode) { // TODO: Check array isn't NULL before dereferencing
         return;
     }
     inOrderToArray(nNode->leftSon, array, i);

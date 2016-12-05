@@ -43,7 +43,6 @@ void SuperBeast::setOwner (Zoologist * owner) {
 }
 
 Zoologist::Zoologist (const Zoologist & original) { // TODO: This copy c'tor is not finished
-    //tree->emptyTree();
     tree = new AVLTree<Animal, SuperBeast>;
     *tree = AVLTree<Animal, SuperBeast>(*original.getTree());
     //tree->rootNode=original.getTree()->copyNodes(original.getTree()->rootNode);
