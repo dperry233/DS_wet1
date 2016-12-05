@@ -614,7 +614,7 @@ void AVLTree<keyType, dataType>::emptyTree () {
 template<class keyType, class dataType>
 TreeResult buildFullTree (AVLTree<keyType, dataType> * tree, AVLNode<keyType, dataType> * root, int numOfRows,
                           AVLNode<keyType, dataType> * parent,
-                          Direction direction) { // TODO: This has leaks! need to update root node
+                          Direction direction) {
     if (0 == numOfRows) {
         return AVLTREE_SUCCESS;
     } // we're done
