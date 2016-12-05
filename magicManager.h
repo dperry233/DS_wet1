@@ -300,10 +300,10 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
     free(combinedArray);
     this->magiTree->getValue(replacement)->getTree().emptyTree();
     this->magiTree->getValue(replacement)->setTree(newTree);
-    this->magiTree->removeValue(replacement);
-    if (0 != magiTree->getValue(magiID)->getTree().size) {
-        magiTree->getValue(magiID)->setMostDangerousID(magiTree->getValue(magiID)->getTree().findMax()->getID());
-    } else magiTree->getValue(magiID)->setMostDangerousID(0);
+    this->magiTree->removeValue(magiID);
+    if (0 != magiTree->getValue(replacement)->getTree().size) {
+        magiTree->getValue(replacement)->setMostDangerousID(magiTree->getValue(replacement)->getTree().findMax()->getID());
+    } else magiTree->getValue(replacement)->setMostDangerousID(0);
 
     return MM_SUCCESS;
 

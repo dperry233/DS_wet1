@@ -122,7 +122,7 @@ StatusType GetAllCreaturesByLevel(void *DS, int magiID, int **creatures, int *nu
 }
 
 
-StatusType ReplaceMagizoologist(void *DS, int ReplacementID, int MagiID){
+StatusType ReplaceMagizoologist(void *DS, int MagiID, int ReplacementID){
 	if(!DS){
 		return INVALID_INPUT;
 	}
