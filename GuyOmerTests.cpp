@@ -373,7 +373,7 @@ bool ranFullTreeTest() {
 	AVLTree<Animal,SuperBeast> tree;
 	tree.insertData(Animal(),SuperBeast());
 	ASSERT_EQUALS(tree.size,1);
-	AVLTree<Animal,SuperBeast> * tree2 = buildEmpty<Animal,SuperBeast>(5); // TODO: leaks for each node including those that should be removed
+	AVLTree<Animal,SuperBeast> * tree2 = buildEmpty<Animal,SuperBeast>(16); // TODO: leaks for each node including those that should be removed
 	//cout << tree2->size << endl;
 
 	delete tree2;
