@@ -391,14 +391,14 @@ bool ranFullTreeTest () {
 
 bool researchProjectTest () {
 //	RUN_TEST(ResearchProjectInitQuitStressTest);
-	RUN_TEST(ResearchProjcectAddMagiTest);
+//	RUN_TEST(ResearchProjcectAddMagiTest);
 //	RUN_TEST(ResearchProjcectAddCreatureTest);
 //	RUN_TEST(ResearchProjcectReleaseCreatureTest);
-//	RUN_TEST(ResearchProjcectReplaceMagiTest);
+	RUN_TEST(ResearchProjcectReplaceMagiTest);
 //	RUN_TEST(ResearchProjcectIncreaseLevelTest);
 //	RUN_TEST(ResearchProjcectGetMostDangerousTest);
 //	RUN_TEST(ResearchProjcectGetAllCreaturesByLevelTest);
-//  RUN_TEST(ranFullTreeTest);
+//    RUN_TEST(ranFullTreeTest);
 
     return true;
 }

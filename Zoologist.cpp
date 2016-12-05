@@ -42,11 +42,13 @@ void SuperBeast::setOwner (Zoologist * owner) {
     Owner = owner;
 }
 
-/*Zoologist::Zoologist (const Zoologist & original) {
-    tree = original.tree;
+Zoologist::Zoologist (const Zoologist & original) {
+    //tree->emptyTree();
+    tree= new AVLTree<Animal,SuperBeast>;
+    tree->rootNode=original.getTree()->copyNodes(original.getTree()->rootNode);
     mostDangerousID = original.mostDangerousID;
     MagiID = original.MagiID;
-}*/
+}
 
 Zoologist::Zoologist (int MagiID) : mostDangerousID(0), MagiID(MagiID) {
     if (MagiID <= 0) throw badInput();

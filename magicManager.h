@@ -142,7 +142,6 @@ MMStatusType MagicManager::AddMagiMM (int MagiID) {
         magiTree->insertData(MagiID, tmpMagi)) { // TODO: after this line, tmpMagi turns to garbage...
         return MM_ALLOCATION_ERROR;
     }
-    //tmpMagi.getTree()->rootNode = NULL; // TODO: Maybe this fixes it
     return MM_SUCCESS;
 }
 

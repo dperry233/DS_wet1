@@ -52,6 +52,7 @@ public:
 
 class Zoologist {
 private:
+
     AVLTree<Animal, SuperBeast>* tree;
     int mostDangerousID;
     int MagiID;
@@ -61,6 +62,8 @@ public:
     // throws badInput if MagiID <= 0
     Zoologist (int MagiID);
 
+    Zoologist (const Zoologist & original);
+
     ~Zoologist ();
 
     // copy c'tor
@@ -69,7 +72,7 @@ public:
     int getMostDangerousID () const;
 
     // throws badInput if dangerousID is NULL
-    void getMostDangerous (int * dangerousID);
+    //void getMostDangerous (int * dangerousID);
 
     void setMostDangerousID (int mostDangerousID);
 
