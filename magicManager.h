@@ -93,13 +93,14 @@ private:
 
 
     MMStatusType
-    getCreaturesByLevelHelper (AVLTree<Animal, SuperBeast> tree, int ** creatures, int * numberOfCreatures) {
-        int * arr = (int *) malloc(sizeof(int) * tree.size);
-        SuperBeast * arr2 = (SuperBeast *) malloc(sizeof(SuperBeast) * tree.size);
+    getCreaturesByLevelHelper (AVLTree<Animal, SuperBeast> * tree, int ** creatures, int * numberOfCreatures) {
+
+        int * arr = (int *) malloc(sizeof(int) * tree->size);
+        SuperBeast * arr2 = (SuperBeast *) malloc(sizeof(SuperBeast) * tree->size);
 
         int i = 0;
-        inOrderToArray(tree.rootNode, arr2, &i);
-        for (int j = 0; j < tree.size; j++) {
+        inOrderToArray(tree->rootNode, arr2, &i);
+        for (int j = 0; j < tree->size; j++) {
             arr[j] = arr2[j].getID();
         }
         reverseArray(arr, i);
