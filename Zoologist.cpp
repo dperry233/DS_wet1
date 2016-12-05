@@ -42,14 +42,19 @@ void SuperBeast::setOwner (Zoologist * owner) {
     Owner = owner;
 }
 
-Zoologist::Zoologist (const Zoologist & original) {
+/*Zoologist::Zoologist (const Zoologist & original) {
     tree = original.tree;
     mostDangerousID = original.mostDangerousID;
     MagiID = original.MagiID;
+}*/
+
+Zoologist::Zoologist (int MagiID) : mostDangerousID(0), MagiID(MagiID) {
+    if (MagiID <= 0) throw badInput();
+    tree = new AVLTree<Animal, SuperBeast>;
 }
 
-Zoologist::Zoologist (int MagiID) : tree(), mostDangerousID(0), MagiID(MagiID) {
-    if (MagiID <= 0) throw badInput();
+Zoologist::~Zoologist () {
+    delete tree;
 }
 
 int Zoologist::getMostDangerousID () const {
@@ -70,15 +75,15 @@ void Zoologist::setMagiID (int MagiID) {
     Zoologist::MagiID = MagiID;
 }
 
-const AVLTree<Animal, SuperBeast> & Zoologist::getTree () const {
+const AVLTree<Animal, SuperBeast> * Zoologist::getTree () const {
     return tree;
 }
 
-AVLTree<Animal, SuperBeast> & Zoologist::getTree () {
+AVLTree<Animal, SuperBeast> * Zoologist::getTree () {
     return tree;
 }
 
-void Zoologist::setTree (const AVLTree<Animal, SuperBeast> & tree) {
+void Zoologist::setTree (AVLTree<Animal, SuperBeast> * tree) {
     Zoologist::tree = tree;
 }
 

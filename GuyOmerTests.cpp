@@ -9,7 +9,7 @@
 using namespace std;
 
 #define DONT_CARE 999
-#define VERY_BIG_NUMBER 2550 //00
+#define VERY_BIG_NUMBER 255//000
 #define VERY_MEDIUM_NUMBER 100
 
 

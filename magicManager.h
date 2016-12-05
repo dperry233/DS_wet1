@@ -172,7 +172,7 @@ MMStatusType MagicManager::AddCreatureMM (int creatureID, int MagiID, int level)
         return MM_ALLOCATION_ERROR;
     }
 
-    TreeResult magiFlag = this->magiTree->getValue(MagiID)->getTree().insertData(key, tmpSuperBeast);
+    TreeResult magiFlag = this->magiTree->getValue(MagiID)->getTree()->insertData(key, tmpSuperBeast);
     if (magiFlag == AVLTREE_ALLOCATION_ERROR) {
         this->IdTree->removeValue(creatureID);
         this->levelTree->removeValue(tmpSuperBeast);
@@ -202,16 +202,16 @@ MMStatusType MagicManager::AddCreatureMM (int creatureID, int MagiID, int level)
 
     //in  magi tree ptr setting
 
-    this->magiTree->getValue(MagiID)->getTree().getValue(tmpSuperBeast)->setOwner(ownerPtr);
-    this->magiTree->getValue(MagiID)->getTree().getValue(tmpSuperBeast)->setBeast1(idTreePtr);
-    this->magiTree->getValue(MagiID)->getTree().getValue(tmpSuperBeast)->setBeast2(levelTreePtr);
+    this->magiTree->getValue(MagiID)->getTree()->getValue(tmpSuperBeast)->setOwner(ownerPtr);
+    this->magiTree->getValue(MagiID)->getTree()->getValue(tmpSuperBeast)->setBeast1(idTreePtr);
+    this->magiTree->getValue(MagiID)->getTree()->getValue(tmpSuperBeast)->setBeast2(levelTreePtr);
 
     mostDangerous = this->levelTree->findMax();
 
 
     //also set most dangerous for owner !!!!!!!!!!!!!!!!!!
     //would probably be best if zoologist took care of itself
-    int tmpDangerous = this->magiTree->getValue(MagiID)->getTree().findMax()->getID();
+    int tmpDangerous = this->magiTree->getValue(MagiID)->getTree()->findMax()->getID();
     this->magiTree->getValue(MagiID)->setMostDangerousID(tmpDangerous);
 
 
@@ -228,11 +228,11 @@ MMStatusType MagicManager::releaseCreatureMM (int creatureID) {
 
     SuperBeast * tmpCreature = this->IdTree->getValue(creatureID);
     Zoologist * owner = tmpCreature->getOwner();
-    owner->getTree().removeValue(*tmpCreature);//should be replaced with addcreature
+    owner->getTree()->removeValue(*tmpCreature);//should be replaced with addcreature
     //make sure to check mostDangerous change
 
-    if (0 == owner->getTree().size) owner->setMostDangerousID(0);
-    else owner->setMostDangerousID(tmpCreature->getOwner()->getTree().findMax()->getID());
+    if (0 == owner->getTree()->size) owner->setMostDangerousID(0);
+    else owner->setMostDangerousID(tmpCreature->getOwner()->getTree()->findMax()->getID());
 
 
 
@@ -255,16 +255,16 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
     }
 
 
-    int originialSize = this->magiTree->getValue(magiID)->getTree().size;
-    int replacementSize = this->magiTree->getValue(replacement)->getTree().size;
+    int originialSize = this->magiTree->getValue(magiID)->getTree()->size;
+    int replacementSize = this->magiTree->getValue(replacement)->getTree()->size;
     int combinedSize = originialSize + replacementSize;
 
     SuperBeast * originalTreeArray = (SuperBeast *) malloc(sizeof(SuperBeast) * originialSize);
     SuperBeast * replacementTreeArray = (SuperBeast *) malloc(sizeof(SuperBeast) * replacementSize);
     SuperBeast * combinedArray = (SuperBeast *) malloc(sizeof(SuperBeast) * (replacementSize + originialSize));
     int i = 0, j = 0;
-    inOrderToArray(magiTree->getValue(magiID)->getTree().rootNode, originalTreeArray, &i);
-    inOrderToArray(magiTree->getValue(replacement)->getTree().rootNode, replacementTreeArray, &j);
+    inOrderToArray(magiTree->getValue(magiID)->getTree()->rootNode, originalTreeArray, &i);
+    inOrderToArray(magiTree->getValue(replacement)->getTree()->rootNode, replacementTreeArray, &j);
 
     //change owner here
     for (int i = 0; i < originialSize; i++) {
@@ -298,11 +298,11 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
     int a = 0;
     inorderSwap(newTree->rootNode, combinedArray, &a);
     free(combinedArray);
-    this->magiTree->getValue(replacement)->getTree().emptyTree();
+    this->magiTree->getValue(replacement)->getTree()->emptyTree();
     this->magiTree->getValue(replacement)->setTree(newTree);
     this->magiTree->removeValue(magiID);
-    if (0 != magiTree->getValue(replacement)->getTree().size) {
-        magiTree->getValue(replacement)->setMostDangerousID(magiTree->getValue(replacement)->getTree().findMax()->getID());
+    if (0 != magiTree->getValue(replacement)->getTree()->size) {
+        magiTree->getValue(replacement)->setMostDangerousID(magiTree->getValue(replacement)->getTree()->findMax()->getID());
     } else magiTree->getValue(replacement)->setMostDangerousID(0);
 
     return MM_SUCCESS;
@@ -332,7 +332,7 @@ MMStatusType MagicManager::increaseLevelMM (int creatureID, int levelIncrease) {
         return MM_ALLOCATION_ERROR;
     }
 
-    TreeResult magiFlag = tmpSuperBeast.getOwner()->getTree().insertData(tmpSuperBeast, tmpSuperBeast);
+    TreeResult magiFlag = tmpSuperBeast.getOwner()->getTree()->insertData(tmpSuperBeast, tmpSuperBeast);
     if (magiFlag == AVLTREE_ALLOCATION_ERROR) {
         this->IdTree->removeValue(creatureID);
         this->levelTree->removeValue(tmpSuperBeast);
@@ -361,9 +361,9 @@ MMStatusType MagicManager::increaseLevelMM (int creatureID, int levelIncrease) {
 
     //in  magi tree ptr setting
 
-    tmpSuperBeast.getOwner()->getTree().getValue(tmpSuperBeast)->setOwner(ownerPtr);
-    tmpSuperBeast.getOwner()->getTree().getValue(tmpSuperBeast)->setBeast1(idTreePtr);
-    tmpSuperBeast.getOwner()->getTree().getValue(tmpSuperBeast)->setBeast2(levelTreePtr);
+    tmpSuperBeast.getOwner()->getTree()->getValue(tmpSuperBeast)->setOwner(ownerPtr);
+    tmpSuperBeast.getOwner()->getTree()->getValue(tmpSuperBeast)->setBeast1(idTreePtr);
+    tmpSuperBeast.getOwner()->getTree()->getValue(tmpSuperBeast)->setBeast2(levelTreePtr);
 
 
     mostDangerous = this->levelTree->findMax();
@@ -371,7 +371,7 @@ MMStatusType MagicManager::increaseLevelMM (int creatureID, int levelIncrease) {
 
     //also set most dangerous for owner !!!!!!!!!!!!!!!!!!
     //would probably be best if zoologist took care of itself
-    int tmpDangerous = tmpSuperBeast.getOwner()->getTree().findMax()->getID();
+    int tmpDangerous = tmpSuperBeast.getOwner()->getTree()->findMax()->getID();
     tmpSuperBeast.getOwner()->setMostDangerousID(tmpDangerous);
 
 
@@ -399,7 +399,7 @@ MMStatusType MagicManager::GetmostDangerousMM (int MagiID, int * creatureID) {
     if (!this->magiTree->findIfValueExists(MagiID)) {
         return MM_FAILURE;
     }
-    if (magiTree->getValue(MagiID)->getTree().size == 0) {
+    if (magiTree->getValue(MagiID)->getTree()->size == 0) {
         *creatureID = -1;
         return MM_SUCCESS;
     }
@@ -434,7 +434,7 @@ MMStatusType MagicManager::GetAllCreaturesByLevelMM (int MagiID,
     if (!this->magiTree->findIfValueExists(MagiID)) {
         return MM_FAILURE;
     }
-    if (this->magiTree->getValue(MagiID)->getTree().size == 0) {
+    if (this->magiTree->getValue(MagiID)->getTree()->size == 0) {
         *numOfCreatures = 0;
         *Creatures = NULL;
         return MM_SUCCESS;
