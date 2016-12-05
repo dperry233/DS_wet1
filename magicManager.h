@@ -258,7 +258,9 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
 
 
     int originialSize = this->magiTree->getValue(magiID)->getTree()->size;
+    // if original == 0 just remove it and return success
     int replacementSize = this->magiTree->getValue(replacement)->getTree()->size;
+    // if replacement == 0 remove it, copy original, change original->id to replacement->id, remove original, insert copy
     int combinedSize = originialSize + replacementSize;
 
 
