@@ -138,9 +138,11 @@ MMStatusType MagicManager::AddMagiMM (int MagiID) {
         return MM_FAILURE;
     }
     Zoologist tmpMagi(MagiID);
-    if (AVLTREE_ALLOCATION_ERROR == magiTree->insertData(MagiID, tmpMagi)) {
+    if (AVLTREE_ALLOCATION_ERROR ==
+        magiTree->insertData(MagiID, tmpMagi)) { // TODO: after this line, tmpMagi turns to garbage...
         return MM_ALLOCATION_ERROR;
     }
+    //tmpMagi.getTree()->rootNode = NULL; // TODO: Maybe this fixes it
     return MM_SUCCESS;
 }
 
@@ -302,7 +304,8 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
     this->magiTree->getValue(replacement)->setTree(newTree);
     this->magiTree->removeValue(magiID);
     if (0 != magiTree->getValue(replacement)->getTree()->size) {
-        magiTree->getValue(replacement)->setMostDangerousID(magiTree->getValue(replacement)->getTree()->findMax()->getID());
+        magiTree->getValue(replacement)->setMostDangerousID(
+                magiTree->getValue(replacement)->getTree()->findMax()->getID());
     } else magiTree->getValue(replacement)->setMostDangerousID(0);
 
     return MM_SUCCESS;
