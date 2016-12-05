@@ -379,10 +379,10 @@ bool ranFullTreeTest () {
     tree.insertData(Animal(), SuperBeast());
     ASSERT_EQUALS(tree.size, 1);
     AVLTree<Animal, SuperBeast> * tree2 = buildEmpty<Animal, SuperBeast>(16);
-    cout << tree2->size << endl;
-    cout << tree2->rootNode->height << endl;
-    cout << tree2->rootNode->rightSon->height << endl;
-    cout << tree2->rootNode->leftSon->rightSon->height << endl;
+//    cout << tree2->size << endl;
+//    cout << tree2->rootNode->height << endl;
+//    cout << tree2->rootNode->rightSon->height << endl;
+//    cout << tree2->rootNode->leftSon->rightSon->height << endl;
 
     delete tree2;
 
@@ -394,11 +394,11 @@ bool researchProjectTest () {
 //	RUN_TEST(ResearchProjcectAddMagiTest);
 //	RUN_TEST(ResearchProjcectAddCreatureTest);
 //	RUN_TEST(ResearchProjcectReleaseCreatureTest);
-//	//RUN_TEST(ResearchProjcectReplaceMagiTest);
+	RUN_TEST(ResearchProjcectReplaceMagiTest);
 //	RUN_TEST(ResearchProjcectIncreaseLevelTest);
 //	RUN_TEST(ResearchProjcectGetMostDangerousTest);
 //	RUN_TEST(ResearchProjcectGetAllCreaturesByLevelTest);
-    RUN_TEST(ranFullTreeTest);
+//    RUN_TEST(ranFullTreeTest);
 
     return true;
 }
