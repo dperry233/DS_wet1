@@ -279,6 +279,8 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
 	//change owner here
 	for (int i = 0; i < originialSize; i++) {
 		originalTreeArray[i].setOwner(magiTree->getValue(replacement));
+		originalTreeArray[i].getBeast1()->setOwner(magiTree->getValue(replacement));
+		originalTreeArray[i].getBeast2()->setOwner(magiTree->getValue(replacement));
 	}
 
 
@@ -306,11 +308,12 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
 
 	}//arrays are merged in CombinedArray
 
-	//reverseArray(combinedArray, i);
+	reverseArray(combinedArray, combinedSize);
 	free(originalTreeArray);
 	free(replacementTreeArray);
 
 	AVLTree<Animal, SuperBeast> * newTree = buildEmpty<Animal, SuperBeast>(combinedSize);
+	//AVLTree<Animal, SuperBeast> * newTree = buildDummy(combinedSize);
 	int a = 0;
 	inorderSwap(newTree->rootNode, combinedArray, &a);
 	free(combinedArray);
