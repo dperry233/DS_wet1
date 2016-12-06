@@ -341,7 +341,7 @@ MMStatusType MagicManager::increaseLevelMM (int creatureID, int levelIncrease) {
 	Zoologist * ownerPtr = (tmpSuperBeast.getOwner());
 	this->IdTree->removeValue(creatureID);
 	this->levelTree->removeValue(tmpSuperBeast);
-	tmpSuperBeast.getOwner()->getTree()->removeValue(tmpSuperBeast);
+	ownerPtr->getTree()->removeValue(tmpSuperBeast);
 
 
 
@@ -378,15 +378,15 @@ MMStatusType MagicManager::increaseLevelMM (int creatureID, int levelIncrease) {
 
 	//levelTree pointers setting
 
-	this->levelTree->getValue(tmpSuperBeast)->setOwner(ownerPtr);
-	this->levelTree->getValue(tmpSuperBeast)->setBeast1(idTreePtr);
-	this->levelTree->getValue(tmpSuperBeast)->setBeast2(levelTreePtr);
+	this->levelTree->getValue(newBeast)->setOwner(ownerPtr);
+	this->levelTree->getValue(newBeast)->setBeast1(idTreePtr);
+	this->levelTree->getValue(newBeast)->setBeast2(levelTreePtr);
 
 	//in  magi tree ptr setting
 
-	tmpSuperBeast.getOwner()->getTree()->getValue(tmpSuperBeast)->setOwner(ownerPtr);
-	tmpSuperBeast.getOwner()->getTree()->getValue(tmpSuperBeast)->setBeast1(idTreePtr);
-	tmpSuperBeast.getOwner()->getTree()->getValue(tmpSuperBeast)->setBeast2(levelTreePtr);
+	tmpSuperBeast.getOwner()->getTree()->getValue(newBeast)->setOwner(ownerPtr);
+	tmpSuperBeast.getOwner()->getTree()->getValue(newBeast)->setBeast1(idTreePtr);
+	tmpSuperBeast.getOwner()->getTree()->getValue(newBeast)->setBeast2(levelTreePtr);
 
 
 	mostDangerous = this->levelTree->findMax();
@@ -394,8 +394,8 @@ MMStatusType MagicManager::increaseLevelMM (int creatureID, int levelIncrease) {
 
 	//also set most dangerous for owner !!!!!!!!!!!!!!!!!!
 	//would probably be best if zoologist took care of itself
-	int tmpDangerous = tmpSuperBeast.getOwner()->getTree()->findMax()->getID();
-	tmpSuperBeast.getOwner()->setMostDangerousID(tmpDangerous);
+	int tmpDangerous = ownerPtr->getTree()->findMax()->getID();
+	ownerPtr->setMostDangerousID(tmpDangerous);
 
 
 	return MM_SUCCESS;
