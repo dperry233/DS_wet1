@@ -255,7 +255,11 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
 	if (!magiTree->findIfValueExists(magiID) || !magiTree->findIfValueExists(replacement)) {
 		return MM_FAILURE;
 	}
-
+	if(magiTree->getValue(magiID)->getTree()->size==0){
+		magiTree->removeValue(magiID);
+		this->mostDangerous=this->levelTree->findMax();
+		return MM_SUCCESS;
+	}
 
 	int originialSize = this->magiTree->getValue(magiID)->getTree()->size;
 	// if original == 0 just remove it and return success
@@ -332,15 +336,20 @@ MMStatusType MagicManager::increaseLevelMM (int creatureID, int levelIncrease) {
 		return MM_FAILURE;
 	}
 	SuperBeast tmpSuperBeast(*this->IdTree->getValue(creatureID));
-	this->releaseCreatureMM(creatureID);
+	int originalLevel=tmpSuperBeast.getLevel();
+	SuperBeast newBeast(creatureID,originalLevel+levelIncrease);
+	Zoologist * ownerPtr = (tmpSuperBeast.getOwner());
+	this->IdTree->removeValue(creatureID);
+	this->levelTree->removeValue(tmpSuperBeast);
+	tmpSuperBeast.getOwner()->getTree()->removeValue(tmpSuperBeast);
 
-	tmpSuperBeast.increaseLevel(levelIncrease);
 
-	TreeResult allFlag = this->IdTree->insertData(creatureID, tmpSuperBeast);
+
+	TreeResult allFlag = this->IdTree->insertData(creatureID, newBeast);
 	if (allFlag == AVLTREE_ALLOCATION_ERROR) {
 		return MM_FAILURE;
 	}
-	allFlag = this->levelTree->insertData(tmpSuperBeast, tmpSuperBeast);
+	allFlag = this->levelTree->insertData(newBeast, newBeast);
 	if (allFlag == AVLTREE_ALLOCATION_ERROR) {
 		this->IdTree->removeValue(creatureID);
 		return MM_ALLOCATION_ERROR;
@@ -359,8 +368,8 @@ MMStatusType MagicManager::increaseLevelMM (int creatureID, int levelIncrease) {
 	//set pointers here
 
 	SuperBeast * idTreePtr = (this->IdTree->getValue(creatureID));
-	SuperBeast * levelTreePtr = (levelTree->getValue(tmpSuperBeast));
-	Zoologist * ownerPtr = (tmpSuperBeast.getOwner());
+	SuperBeast * levelTreePtr = (levelTree->getValue(newBeast));
+
 
 	//idTree pointers setting
 	this->IdTree->getValue(creatureID)->setOwner(ownerPtr);
