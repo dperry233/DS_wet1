@@ -387,9 +387,9 @@ MMStatusType MagicManager::increaseLevelMM (int creatureID, int levelIncrease) {
 
 	//in  magi tree ptr setting
 
-	tmpSuperBeast.getOwner()->getTree()->getValue(newBeast)->setOwner(ownerPtr);
-	tmpSuperBeast.getOwner()->getTree()->getValue(newBeast)->setBeast1(idTreePtr);
-	tmpSuperBeast.getOwner()->getTree()->getValue(newBeast)->setBeast2(levelTreePtr);
+	ownerPtr->getTree()->getValue(newBeast)->setOwner(ownerPtr);
+	ownerPtr->getTree()->getValue(newBeast)->setBeast1(idTreePtr);
+	ownerPtr->getTree()->getValue(newBeast)->setBeast2(levelTreePtr);
 
 
 	mostDangerous = this->levelTree->findMax();
