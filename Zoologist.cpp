@@ -58,6 +58,7 @@ const Zoologist & Zoologist::operator= (const Zoologist & rhs) {
     *tree = *(rhs.tree);
     mostDangerousID = rhs.mostDangerousID;
     MagiID = rhs.MagiID;
+    return *this;
 }
 
 Zoologist::Zoologist (int MagiID) : mostDangerousID(0), MagiID(MagiID) {
