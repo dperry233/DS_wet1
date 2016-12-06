@@ -86,7 +86,10 @@ AVLTree<Animal, SuperBeast> * Zoologist::getTree () {
 }
 
 void Zoologist::setTree (AVLTree<Animal, SuperBeast> * newTree) {
-    delete this->tree;
+    if(this->tree!=NULL){
+    	delete this->tree;
+    }
+
 	this->tree = newTree;
 }
 

@@ -358,7 +358,7 @@ MMStatusType MagicManager::increaseLevelMM (int creatureID, int levelIncrease) {
 		return MM_ALLOCATION_ERROR;
 	}
 
-	TreeResult magiFlag = tmpSuperBeast.getOwner()->getTree()->insertData(tmpSuperBeast, tmpSuperBeast);
+	TreeResult magiFlag = ownerPtr->getTree()->insertData(newBeast, newBeast);
 	if (magiFlag == AVLTREE_ALLOCATION_ERROR) {
 		this->IdTree->removeValue(creatureID);
 		this->levelTree->removeValue(tmpSuperBeast);
