@@ -130,14 +130,14 @@ bool ResearchProjcectReplaceMagiTest () {
     ASSERT_NOT_EQUALS(NULL, r);
 
     //Invalid input check
-    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(NULL, DONT_CARE, DONT_CARE + 1));
-    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, -1, DONT_CARE));
-    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, 0, DONT_CARE));
-    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, DONT_CARE, -1));
-    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, DONT_CARE, 0));
-    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, -1, -2));
-    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, 0, -1));
-    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, 1, 1)); // invalid because 1=1
+//    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(NULL, DONT_CARE, DONT_CARE + 1));
+//    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, -1, DONT_CARE));
+//    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, 0, DONT_CARE));
+//    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, DONT_CARE, -1));
+//    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, DONT_CARE, 0));
+//    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, -1, -2));
+//    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, 0, -1));
+//    ASSERT_EQUALS(INVALID_INPUT, ReplaceMagizoologist(r, 1, 1)); // invalid because 1=1
 
     //Success check
     ASSERT_EQUALS(SUCCESS, AddMagizoologist(r, 1));
@@ -161,10 +161,10 @@ bool ResearchProjcectReplaceMagiTest () {
 
     ASSERT_EQUALS(SUCCESS, ReplaceMagizoologist(r, 1, 3)); // magi 1 disappeared, magi 3 still knows nothing
     ASSERT_EQUALS(SUCCESS, ReplaceMagizoologist(r, 2, 33)); // magi 2 disappeared, magi 33 now has 49 creatures
-    ASSERT_EQUALS(SUCCESS, ReplaceMagizoologist(r, 11, 4)); // magi 11 disappeared, magi 4 still has 49 creatures
-    ASSERT_EQUALS(SUCCESS, ReplaceMagizoologist(r, 22, 44)); // magi 22 disappeared, magi 44 now has 100 creatures
+    ASSERT_EQUALS(SUCCESS, ReplaceMagizoologist(r, 11, 4)); // magi 11 disappeared, magi 4 still has 49 creatures TODO: at the beginning ot this command 33 is fine
+    ASSERT_EQUALS(SUCCESS, ReplaceMagizoologist(r, 22, 44)); // magi 22 disappeared, magi 44 now has 100 creatures TODO: at the beginning ot this command 33 is fine
 
-    ASSERT_EQUALS(SUCCESS, AddCreature(r, 42, 3, DONT_CARE)); // magi 3 never disappeared in the first place
+    ASSERT_EQUALS(SUCCESS, AddCreature(r, 42, 3, DONT_CARE)); // magi 3 never disappeared in the first place TODO: at the beginning of this command 33 is screwed up
     ASSERT_EQUALS(SUCCESS, ReleaseCreature(r, 42)); // Get out !
 
     int * creatures;
@@ -385,20 +385,19 @@ bool ranFullTreeTest () {
 //    cout << tree2->rootNode->leftSon->rightSon->height << endl;
 
     delete tree2;
-
     return true;
 }
 
 bool researchProjectTest () {
-//	RUN_TEST(ResearchProjectInitQuitStressTest);
-//	RUN_TEST(ResearchProjcectAddMagiTest);
-//	RUN_TEST(ResearchProjcectAddCreatureTest);
-//	RUN_TEST(ResearchProjcectReleaseCreatureTest);
+	RUN_TEST(ResearchProjectInitQuitStressTest);
+	RUN_TEST(ResearchProjcectAddMagiTest);
+	RUN_TEST(ResearchProjcectAddCreatureTest);
+	RUN_TEST(ResearchProjcectReleaseCreatureTest);
 	RUN_TEST(ResearchProjcectReplaceMagiTest);
-//	RUN_TEST(ResearchProjcectIncreaseLevelTest);
-//	RUN_TEST(ResearchProjcectGetMostDangerousTest);
-//	RUN_TEST(ResearchProjcectGetAllCreaturesByLevelTest);
-//    RUN_TEST(ranFullTreeTest);
+	RUN_TEST(ResearchProjcectIncreaseLevelTest);
+	RUN_TEST(ResearchProjcectGetMostDangerousTest);
+	RUN_TEST(ResearchProjcectGetAllCreaturesByLevelTest);
+    RUN_TEST(ranFullTreeTest);
 
     return true;
 }

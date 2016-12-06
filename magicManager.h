@@ -140,7 +140,7 @@ MMStatusType MagicManager::AddMagiMM (int MagiID) {
 	}
 	Zoologist tmpMagi(MagiID);
 	if (AVLTREE_ALLOCATION_ERROR ==
-			magiTree->insertData(MagiID, tmpMagi)) { // TODO: after this line, tmpMagi turns to garbage...
+			magiTree->insertData(MagiID, tmpMagi)) {
 		return MM_ALLOCATION_ERROR;
 	}
 	return MM_SUCCESS;

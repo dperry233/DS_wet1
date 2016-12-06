@@ -47,13 +47,12 @@ public:
 
     void setOwner (Zoologist * owner);
 
-
 };
 
 class Zoologist {
 private:
 
-    AVLTree<Animal, SuperBeast>* tree;
+    AVLTree<Animal, SuperBeast> * tree;
     int mostDangerousID;
     int MagiID;
 
@@ -85,6 +84,8 @@ public:
     AVLTree<Animal, SuperBeast> * getTree ();
 
     void setTree (AVLTree<Animal, SuperBeast> * tree);
+
+    const Zoologist & operator= (const Zoologist & rhs);
 
 };
 

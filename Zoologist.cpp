@@ -44,10 +44,20 @@ void SuperBeast::setOwner (Zoologist * owner) {
 
 Zoologist::Zoologist (const Zoologist & original) { // TODO: This copy c'tor is not finished
     tree = new AVLTree<Animal, SuperBeast>;
-    *tree = (*original.getTree());
-    //tree->rootNode=original.getTree()->copyNodes(original.getTree()->rootNode);
+    *tree = (*original.tree);
     mostDangerousID = original.mostDangerousID;
     MagiID = original.MagiID;
+}
+
+const Zoologist & Zoologist::operator= (const Zoologist & rhs) {
+    if (this == &rhs) {
+        return *this;
+    }
+    //delete tree;
+    //tree = new AVLTree<Animal, SuperBeast>;
+    *tree = *(rhs.tree);
+    mostDangerousID = rhs.mostDangerousID;
+    MagiID = rhs.MagiID;
 }
 
 Zoologist::Zoologist (int MagiID) : mostDangerousID(0), MagiID(MagiID) {
@@ -86,11 +96,11 @@ AVLTree<Animal, SuperBeast> * Zoologist::getTree () {
 }
 
 void Zoologist::setTree (AVLTree<Animal, SuperBeast> * newTree) {
-    if(this->tree!=NULL){
-    	delete this->tree;
+    if (this->tree != NULL) {
+        delete this->tree;
     }
 
-	this->tree = newTree;
+    this->tree = newTree;
 }
 
 /*void Zoologist::getMostDangerous (int * dangerousID) {
