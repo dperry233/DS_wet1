@@ -1,0 +1,11 @@
+Your assignment has been successfully submitted.
+Transaction summary:
+Date:	6/12/2016, 17:21:00
+Assignment:	Wet 1
+Course:	234218 (Data Structures 1)
+Semester:	Winter 2016-2017
+Submitted by:	300411659, 300551140
+File name:	wet1sub1.zip
+File size:	431K
+
+Confirmation code:	234218-300645877-0290740
