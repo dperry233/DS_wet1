@@ -310,7 +310,8 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
 	int a = 0;
 	inorderSwap(newTree->rootNode, combinedArray, &a);
 	free(combinedArray);
-	this->magiTree->getValue(replacement)->getTree()->emptyTree();
+
+	//this->magiTree->getValue(replacement)->getTree()->emptyTree();
 	this->magiTree->getValue(replacement)->setTree(newTree);
 	this->magiTree->removeValue(magiID);
 	if (0 != magiTree->getValue(replacement)->getTree()->size) {
