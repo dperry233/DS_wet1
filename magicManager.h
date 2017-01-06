@@ -285,8 +285,8 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
 
 
 	//arrays separated into 2 at this point
-	//reverseArray(originalTreeArray, originialSize);
-	//reverseArray(replacementTreeArray, replacementSize);
+	reverseArray(originalTreeArray, originialSize);
+	reverseArray(replacementTreeArray, replacementSize);
 	//merge arrays
 	for (int i = 0, j = 0, k = 0; i < combinedSize; i++) {
 		if(k>=replacementSize){
