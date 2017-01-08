@@ -31,6 +31,12 @@ public:
 
     SuperBeast (const SuperBeast & original);
 
+//    SuperBeast & operator= (const SuperBeast & rhs){
+//        this->ID=rhs.ID;
+//        this->Level=rhs.Level;
+//        return *this;
+//    };
+
     // explicit conversion c'tor from base class
     explicit SuperBeast (const Animal & animal, Zoologist * owner = NULL, SuperBeast * first = NULL,
                          SuperBeast * second = NULL);

@@ -558,18 +558,58 @@ TreeResult AVLTree<keyType, dataType>::removeValue (keyType & iKey) {
         while (replace->leftSon) {
             replace = replace->leftSon;
         }
-        tmp->swap(replace);
-        parent = replace->father;
+        //tmp->swap(replace); TODO: We swap pointers instead of doing a value and key swap
+        // replace is the following node
+        // tmp is the one to be deleted
+        AVLNode<keyType, dataType> * swap;
+        swap = tmp->father;
+        tmp->father = replace->father;
+        replace->father = swap;
+
+        swap = tmp->leftSon;
+        tmp->leftSon = replace->leftSon;
+        replace->leftSon = swap;
+
+        swap = tmp->rightSon;
+        tmp->rightSon =
+        replace->rightSon = swap; // now replace is in the right place but his friends don't know yet
+        // and tmp is in the place of his follower and needs to be deleted
+
+        if (replace->father) {
+            if (replace->father->rightSon->key == tmp->key) { // this guy is the right son because temp was the right
+                replace->father->rightSon = replace;
+            } else replace->father->leftSon = replace;
+        }
+
+        if (replace->rightSon) {
+            replace->rightSon->father = replace;
+        }
+
+        if (replace->leftSon) {
+            replace->leftSon->father = replace;
+        }
+
+        if (tmp->father) {
+            if (tmp->father->rightSon->key == replace->key) { // to be deleted is the right son
+                tmp->father->rightSon=tmp;
+            } else tmp->father->leftSon=tmp;
+        }
+
+        if (tmp->rightSon) {
+            tmp->rightSon->father=tmp;
+        }
+
+        parent = tmp->father;
         if (parent->rightSon) {
-            if (parent->rightSon->key == replace->key) {
-                parent->setRightSon(replace->rightSon);
+            if (parent->rightSon->key == tmp->key) {
+                parent->setRightSon(tmp->rightSon);
             } else {
-                parent->setLeftSon(replace->rightSon);
+                parent->setLeftSon(tmp->rightSon);
             }
         } else {
-            parent->setLeftSon(replace->rightSon);
+            parent->setLeftSon(tmp->rightSon);
         }
-        delete replace;
+        delete tmp;
         while (parent) {
             parent->getAndSetHeight();
             parent->updateBalanceFactor();
@@ -578,7 +618,6 @@ TreeResult AVLTree<keyType, dataType>::removeValue (keyType & iKey) {
         }
     }
     size--;
-    //if (0==size) rootNode=NULL; // TODO: Check if this works instead of doing something different for size=1
     return AVLTREE_SUCCESS;
 }
 
@@ -622,8 +661,8 @@ TreeResult buildFullTree (AVLTree<keyType, dataType> * tree, AVLNode<keyType, da
         root = new AVLNode<keyType, dataType>(keyType(), dataType());
         if (NULL != parent) {
             root->father = parent;
-            if (LEFT == direction) root->father->leftSon=root;
-            else root->father->rightSon=root;
+            if (LEFT == direction) root->father->leftSon = root;
+            else root->father->rightSon = root;
         } else { // this is the first node!
             tree->rootNode = root;
         }

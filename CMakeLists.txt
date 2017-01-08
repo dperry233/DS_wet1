@@ -1,12 +1,18 @@
 set(CMAKE_LEGACY_CYGWIN_WIN32 0) # Remove when CMake >= 2.8.4 is required
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required (VERSION 2.6)
+project (DS_Wet1 CXX)
+add_executable(DS_Wet1 Animal.cpp Animal.h avlTree.h library1.h library1.cpp magicManager.h Zoologist.cpp Zoologist.h #RPtst.h GuyOmerTests.cpp)
+        main1.cpp)
+
+#set(CMAKE_LEGACY_CYGWIN_WIN32 0) # Remove when CMake >= 2.8.4 is required
+#cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 # Above line indicates to Cmake that minimum version 2.8 is required.
 # As you may have noted all lines beginning with hash symbol are treated as comments by Cmake.
-SET(sampleName DS_Wet1)
+#SET(sampleName DS_Wet1)
 # set(CMAKE_CXX_STANDARD 11) # Not relevant for Wet1
 # In the above line we declared a variable sampleName and assigned it a value MyApp. We will make use of the same later.
-project(DS_Wet1)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG -Wall")
+#project(DS_Wet1)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG -Wall")
 # here we define the project or solution (for visual studio) name
 # In following lines we try to find out the packages of additional libraries, if reqd. Here we are trying to locate PCL and mrpt library.
 # u may replace the names by yours. Each such package should have a Cmake file in them, if not then we may have to manually define the paths.
@@ -36,10 +42,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG -Wall")
 # compilation in windows platform.
 # Followed by the executable name come all your source and header files.
 # All cpp fles will be clubbed into source folder and all .h files will be added to header files folder of the project.
-SET(SOURCE_FILES Zoologist.cpp Zoologist.h Animal.h Animal.cpp avlTree.h magicManager.h #tests.cpp tests.h
-        library1.cpp library1.h # maybe without
-        RPtst.h GuyOmerTests.cpp)
-add_executable (DS_Wet1 ${SOURCE_FILES})
+#SET(SOURCE_FILES Zoologist.cpp Zoologist.h Animal.h Animal.cpp avlTree.h magicManager.h #tests.cpp tests.h
+#        library1.cpp library1.h # maybe without
+#        RPtst.h GuyOmerTests.cpp)
+#add_executable (DS_Wet1 ${SOURCE_FILES})
 
 # There may be some additional dependencies which you may have to specify for the project, which you may do as in following lines.
 # Note that first parameter is the executable name.
