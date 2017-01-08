@@ -494,6 +494,7 @@ TreeResult AVLTree<keyType, dataType>::removeValue (keyType & iKey) {
     }*/
     AVLNode<keyType, dataType> * parent = NULL;
     AVLNode<keyType, dataType> * tmp = rootNode->returnNode(iKey);
+    AVLNode<keyType, dataType> * replace = NULL;
     if (tmp->father) {
         parent = tmp->father;
     }
@@ -554,7 +555,7 @@ TreeResult AVLTree<keyType, dataType>::removeValue (keyType & iKey) {
             delete tmp;
         }
     } else {
-        AVLNode<keyType, dataType> * replace = tmp->rightSon;
+        replace = tmp->rightSon;
         while (replace->leftSon) {
             replace = replace->leftSon;
         }
@@ -615,6 +616,7 @@ TreeResult AVLTree<keyType, dataType>::removeValue (keyType & iKey) {
         } else {
             parent->setLeftSon(tmp->rightSon);
         }
+
         delete tmp;
         while (parent) {
             parent->getAndSetHeight();
@@ -624,6 +626,9 @@ TreeResult AVLTree<keyType, dataType>::removeValue (keyType & iKey) {
         }
     }
     size--;
+    if (replace != NULL && !replace->father) {
+        this->rootNode = replace;
+    }
     return AVLTREE_SUCCESS;
 }
 
