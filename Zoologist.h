@@ -47,13 +47,6 @@ public:
 
     void setOwner (Zoologist * owner);
 
-    SuperBeast & operator= (const SuperBeast & rhs){
-    	this->ID=rhs.ID;
-    	this->Level=rhs.Level;
-    	return *this;
-    };
-
-
 };
 
 class Zoologist {
@@ -93,10 +86,6 @@ public:
     void setTree (AVLTree<Animal, SuperBeast> * tree);
 
     const Zoologist & operator= (const Zoologist & rhs);
-
-
-
-
 
 };
 
