@@ -80,13 +80,13 @@ private:
 	}
 
 
-	void inorderSwap (AVLNode<Animal, SuperBeast> * node, SuperBeast * arr, int * i) {
+	void inorderSwap (AVLNode<Animal, SuperBeast> * node, SuperBeast ** arr, int * i) {
 		if (!node) {
 			return;
 		}
 		inorderSwap(node->leftSon, arr, i);
-		node->key = arr[*i];
-		node->value = arr[(*i)];
+		node->key = *arr[*i];
+		node->value = *arr[(*i)];
 		(*i)++;
 		inorderSwap(node->rightSon, arr, i);
 	}
@@ -96,12 +96,12 @@ private:
 	getCreaturesByLevelHelper (AVLTree<Animal, SuperBeast> * tree, int ** creatures, int * numberOfCreatures) {
 
 		int * arr = (int *) malloc(sizeof(int) * tree->size);
-		SuperBeast * arr2 = (SuperBeast *) malloc(sizeof(SuperBeast) * tree->size);
+		SuperBeast ** arr2 = (SuperBeast **) malloc(sizeof(SuperBeast*) * tree->size);
 
 		int i = 0;
 		inOrderToArray(tree->rootNode, arr2, &i);
 		for (int j = 0; j < tree->size; j++) {
-			arr[j] = arr2[j].getID();
+			arr[j] = arr2[j]->getID();
 		}
 		reverseArray(arr, i);
 		free(arr2);
@@ -269,18 +269,18 @@ MMStatusType MagicManager::ReplaceMagi (int magiID, int replacement) {
 
 
 	// TODO: Possibly allocating 0 size array - if the target has no animals, just remove original, change ID, and reinsert
-	SuperBeast * originalTreeArray = (SuperBeast *) malloc(sizeof(SuperBeast) * originialSize);
-	SuperBeast * replacementTreeArray = (SuperBeast *) malloc(sizeof(SuperBeast) * replacementSize);
-	SuperBeast * combinedArray = (SuperBeast *) malloc(sizeof(SuperBeast) * (replacementSize + originialSize));
+	SuperBeast ** originalTreeArray = (SuperBeast **) malloc(sizeof(SuperBeast*) * originialSize);
+	SuperBeast ** replacementTreeArray = (SuperBeast **) malloc(sizeof(SuperBeast*) * replacementSize);
+	SuperBeast ** combinedArray = (SuperBeast **) malloc(sizeof(SuperBeast*) * (replacementSize + originialSize));
 	int i = 0, j = 0;
 	inOrderToArray(magiTree->getValue(magiID)->getTree()->rootNode, originalTreeArray, &i);
 	inOrderToArray(magiTree->getValue(replacement)->getTree()->rootNode, replacementTreeArray, &j);
 
 	//change owner here
 	for (int i = 0; i < originialSize; i++) {
-		originalTreeArray[i].setOwner(magiTree->getValue(replacement));
-		originalTreeArray[i].getBeast1()->setOwner(magiTree->getValue(replacement));
-		originalTreeArray[i].getBeast2()->setOwner(magiTree->getValue(replacement));
+		originalTreeArray[i]->setOwner(magiTree->getValue(replacement));
+		originalTreeArray[i]->getBeast1()->setOwner(magiTree->getValue(replacement));
+		originalTreeArray[i]->getBeast2()->setOwner(magiTree->getValue(replacement));
 	}
 
 
