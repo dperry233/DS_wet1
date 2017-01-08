@@ -575,7 +575,10 @@ TreeResult AVLTree<keyType, dataType>::removeValue (keyType & iKey) {
 
         swap = tmp->rightSon;
         tmp->rightSon = replace->rightSon;
-        replace->rightSon = swap; // now replace is in the right place but his friends don't know yet
+        replace->rightSon = swap;
+        if (replace->rightSon == replace) { // if switching between father and right son
+            replace->rightSon = tmp;
+        }// now replace is in the right place but his friends don't know yet
         // and tmp is in the place of his follower and needs to be deleted
 
         if (replace->father) {
@@ -585,20 +588,18 @@ TreeResult AVLTree<keyType, dataType>::removeValue (keyType & iKey) {
         }
 
         if (replace->rightSon) {
-            if (replace->rightSon == replace) {
-                replace->rightSon = tmp;
-            } else replace->rightSon->father = replace;
+            replace->rightSon->father = replace;
         }
 
         if (replace->leftSon) {
             replace->leftSon->father = replace;
         }
 
-        if (tmp->father) {
-            if (tmp->father->rightSon->key == replace->key) { // to be deleted is the right son
-                tmp->father->rightSon = tmp;
-            } else tmp->father->leftSon = tmp;
-        }
+//        if (tmp->father) {
+//            if (tmp->father->rightSon->key == replace->key) { // to be deleted is the right son
+//                tmp->father->rightSon = tmp;
+//            } else tmp->father->leftSon = tmp;
+//        }
 
         if (tmp->rightSon) {
             tmp->rightSon->father = tmp;
