@@ -35,7 +35,7 @@ typedef enum {
  * Output:        None.
  * Return Values: A pointer to a new instance of the data structure - as a void* pointer.
  */
-void* Init();
+void * Init ();
 
 /* Description:   Adds a new Magizoologist.
  * Input:         DS - A pointer to the data structure.
@@ -46,7 +46,7 @@ void* Init();
  *                FAILURE - If magiID is already in the DS.
  *                SUCCESS - Otherwise.
  */
-StatusType AddMagizoologist(void *DS, int magiID);
+StatusType AddMagizoologist (void * DS, int magiID);
 
 /* Description:   Adds a new magical creature to the system.
  * Input:         DS - A pointer to the data structure.
@@ -59,7 +59,7 @@ StatusType AddMagizoologist(void *DS, int magiID);
  *                FAILURE - If creatureID is already in the DS, or magiID isn't in the DS.
  *                SUCCESS - Otherwise.
  */
-StatusType AddCreature(void *DS, int creatureID, int magiID, int level);
+StatusType AddCreature (void * DS, int creatureID, int magiID, int level);
 
 /* Description:   Removes an existing creature.
  * Input:         DS - A pointer to the data structure.
@@ -70,7 +70,7 @@ StatusType AddCreature(void *DS, int creatureID, int magiID, int level);
  *                FAILURE - If creatureID isn't in the DS.
  *                SUCCESS - Otherwise.
  */
-StatusType ReleaseCreature(void *DS, int creatureID);
+StatusType ReleaseCreature (void * DS, int creatureID);
 
 /* Description:   Removes an existing magizoologist, and transfers he's/she's creatures
  * 				  to a replacing magizoologist.
@@ -83,7 +83,7 @@ StatusType ReleaseCreature(void *DS, int creatureID);
  *                FAILURE - If creatureID isn't in the DS.
  *                SUCCESS - Otherwise.
  */
-StatusType ReplaceMagizoologist(void *DS, int MagiID, int ReplacementID);
+StatusType ReplaceMagizoologist (void * DS, int MagiID, int ReplacementID);
 
 /* Description:   Increases the danger level of a creature.
  * Input:         DS - A pointer to the data structure.
@@ -95,7 +95,7 @@ StatusType ReplaceMagizoologist(void *DS, int MagiID, int ReplacementID);
  *                FAILURE - If creatureID isn't in the DS.
  *                SUCCESS - Otherwise.
  */
-StatusType IncreaseLevel(void *DS, int creatureID, int levelIncrease);
+StatusType IncreaseLevel (void * DS, int creatureID, int levelIncrease);
 
 /* Description:   Returns the most dangerous creature assigned to magiID
  * 			      If magiID < 0, returns the most dangerous creature in the entire DS.
@@ -106,7 +106,7 @@ StatusType IncreaseLevel(void *DS, int creatureID, int levelIncrease);
  *                INVALID_INPUT - If DS==NULL, or if creatureID == NULL, or if magiID == 0.
  *                SUCCESS - Otherwise.
  */
-StatusType GetMostDangerous(void *DS, int magiID, int *creatureID);
+StatusType GetMostDangerous (void * DS, int magiID, int * creatureID);
 
 /* Description:   Returns all the creatures assigned to magiID sorted by their danger level.
  *           			If magiID < 0, returns all the creatures in the entire DS sorted by their danger level.
@@ -119,7 +119,7 @@ StatusType GetMostDangerous(void *DS, int magiID, int *creatureID);
  *                INVALID_INPUT - If any of the arguments is NULL or if magiID == 0.
  *                SUCCESS - Otherwise.
  */
-StatusType GetAllCreaturesByLevel(void *DS, int magiID, int **creatures, int *numOfCreatures);
+StatusType GetAllCreaturesByLevel (void * DS, int magiID, int ** creatures, int * numOfCreatures);
 
 /* Description:   Quits and deletes the database.
  *                DS should be set to NULL.
@@ -127,7 +127,7 @@ StatusType GetAllCreaturesByLevel(void *DS, int magiID, int **creatures, int *nu
  * Output:        None.
  * Return Values: None.
  */
-void Quit(void** DS);
+void Quit (void ** DS);
 
 #ifdef __cplusplus
 }
